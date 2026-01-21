@@ -16,35 +16,6 @@ The application is **deployed on a remote server**, accessed via a **custom doma
 
 ---
 
-## 🧱 Technology Stack
-
-### Backend
-
-* **Linux** (Ubuntu)
-* **Apache**
-* **MySQL**
-* **PHP**
-* REST-style API endpoints
-* JSON request/response format
-
-### Frontend
-
-* HTML
-* CSS
-* JavaScript
-* AJAX (XMLHttpRequest / Fetch)
-
-### Tools & Documentation
-
-* GitHub (version control)
-* SwaggerHub (API documentation)
-* UML Use Case Diagram
-* ER Diagram (ERD)
-* Gantt Chart
-* Lighthouse accessibility testing
-
----
-
 ## ✨ Features
 
 ### User Accounts
@@ -79,26 +50,6 @@ Each contact includes:
 * Partial match support (e.g., `Jo` → John, Jones)
 * Case-insensitive
 * No client-side caching of contact lists
-
----
-
-## 🧩 Architecture Overview
-
-```
-Browser (HTML/CSS/JS)
-        |
-        | AJAX (JSON)
-        v
-PHP REST API (Apache)
-        |
-        | SQL Queries
-        v
-MySQL Database (Remote)
-```
-
-* The frontend **never directly accesses the database**
-* All data flows through **PHP API endpoints**
-* Each API endpoint performs authentication, validation, and database access
 
 ---
 
@@ -224,16 +175,6 @@ Each PHP file must include:
 $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 ```
 
-Example endpoints:
-
-* `Login.php`
-* `AddContact.php`
-* `SearchContacts.php`
-* `DeleteContact.php`
-* `UpdateContact.php`
-
----
-
 ### 5️⃣ Frontend Deployment
 
 Upload:
@@ -273,34 +214,6 @@ Use **FileZilla** or **SFTP** for uploads.
 ```
 
 Responses are returned as JSON objects or arrays.
-
----
-
-## 📊 Documentation & Presentation Artifacts
-
-The project includes:
-
-* UML Use Case Diagram
-* Entity Relationship Diagram (ERD)
-* Gantt Chart
-* SwaggerHub API documentation
-* Lighthouse accessibility report
-* Live hosted demo
-
----
-
-## 👥 Team Contributions
-
-Each team member contributed to:
-
-* Backend development
-* Frontend UI
-* API integration
-* Documentation
-* Testing
-* Presentation delivery
-
-All contributions are tracked via GitHub commits.
 
 ---
 
