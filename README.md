@@ -4,14 +4,6 @@
 
 This project is a **full-stack, API-driven personal contact manager** developed as part of a **small group software engineering project**. The application allows users to **register, log in, and securely manage their own contacts**, including creating, viewing, searching, updating, and deleting contact records.
 
-The system is built using a **LAMP stack (Linux, Apache, MySQL, PHP)** and follows modern web development practices such as:
-
-* RESTful APIs
-* JSON-based client–server communication
-* Database-backed, server-side search
-* Separation of front-end and back-end concerns
-* Formal documentation and diagrams
-
 The application is **deployed on a remote server**, accessed via a **custom domain**, and demonstrated live during a team presentation.
 
 ---
