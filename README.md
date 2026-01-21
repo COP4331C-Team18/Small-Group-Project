@@ -6,8 +6,6 @@ This project is a **full-stack, API-driven personal contact manager** developed 
 
 The application is **deployed on a remote server**, accessed via a **custom domain**, and demonstrated live during a team presentation.
 
----
-
 ## ✨ Features
 
 ### User Accounts
@@ -43,8 +41,6 @@ Each contact includes:
 * Case-insensitive
 * No client-side caching of contact lists
 
----
-
 ## 🗄️ Database Schema
 
 ### Users Table
@@ -68,8 +64,6 @@ Each contact includes:
 | Email     | VARCHAR(50) |
 | UserID    | INT (FK)    |
 
----
-
 ## 🚀 Deployment & Setup Guide (LAMP)
 
 ### 1️⃣ Create a LAMP Server
@@ -87,8 +81,6 @@ Each contact includes:
 
 Apache, MySQL, and PHP are preinstalled.
 
----
-
 ### 2️⃣ Configure Web Root
 
 ```bash
@@ -105,8 +97,6 @@ Directory structure:
 │── images/
 │── LAMPAPI/
 ```
-
----
 
 ### 3️⃣ Database Setup
 
@@ -151,8 +141,6 @@ CREATE USER 'TheBeast' IDENTIFIED BY 'WeLoveCOP4331';
 GRANT ALL PRIVILEGES ON COP4331.* TO 'TheBeast'@'%';
 ```
 
----
-
 ### 4️⃣ API Configuration
 
 All API endpoints live in:
@@ -178,8 +166,6 @@ Upload:
 * `/images`
 
 Use **FileZilla** or **SFTP** for uploads.
-
----
 
 ## 🔌 API Usage
 
@@ -207,8 +193,6 @@ Use **FileZilla** or **SFTP** for uploads.
 
 Responses are returned as JSON objects or arrays.
 
----
-
 ## ⚠️ Important Notes
 
 * No localhost demos – application must be live
@@ -217,8 +201,6 @@ Responses are returned as JSON objects or arrays.
 * Users can only access their own data
 * All communication uses JSON
 * Repository is public as required
-
----
 
 ## 📎 Links
 
