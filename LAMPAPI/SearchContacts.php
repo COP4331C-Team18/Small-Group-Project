@@ -45,10 +45,10 @@
     ");
 
     $searchVal = "%" . $inputData["search"] . "%";
-		$statement->bind_param("issss", $inputData["userId"], $searchVal, $searchVal, $searchVal, $searchVal);
+	$statement->bind_param("issss", $inputData["userId"], $searchVal, $searchVal, $searchVal, $searchVal);
     $statement->execute();
 		
-		$result = $statement->get_result();
+	$result = $statement->get_result();
    
     while($row = $result->fetch_assoc())
 		{
