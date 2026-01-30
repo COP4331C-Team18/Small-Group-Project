@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nebulist | History</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <!-- Core JS -->
+    <script src="../js/code.js" defer></script>
+
+    <!-- Auth Guard -->
+    <script defer>
+        readCookie();
+        if (userId <= 0) {
+            window.location.href = "/login.html";
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Fixed Header -->
+    <header class="dashboard-header">
+        <h1 class="dashboard-title">NEBULIST</h1>
+        
+        <nav class="dashboard-nav">
+            <a href="./" class="nav-link">Home</a>
+            <a href="contacts.html" class="nav-link active">Contacts</a>
+            <a href="history.html" class="nav-link">History</a>
+            <a href="settings.html" class="nav-link">Settings</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="#" onclick="doLogout()" class="nav-link logout">Logout</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+       
+    </main>
+</body>
+</html>

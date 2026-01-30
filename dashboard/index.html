@@ -1,6 +1,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nebulist | Dashboard</title>
 
     <!-- Fonts -->
@@ -13,42 +14,43 @@
     <!-- Core JS -->
     <script src="../js/code.js" defer></script>
 
-    <!-- Auth Guard -->
+    <!-- Auth Guard & User Display -->
     <script defer>
         readCookie();
         if (userId <= 0) {
             window.location.href = "/login.html";
         }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = getUserName ? getUserName() : 'Commander';
+            document.querySelector('.username-text').textContent = username;
+        });
     </script>
 </head>
 
 <body>
-    <!-- Header with title and navigation -->
+    <!-- Fixed Header -->
     <header class="dashboard-header">
         <h1 class="dashboard-title">NEBULIST</h1>
+        
         <nav class="dashboard-nav">
-            <a href="./" class="nav-link active" data-page="home">Home</a>
-            <a href="contacts.html" class="nav-link" data-page="contacts">Contacts</a>
-            <a href="history.html" class="nav-link" data-page="history">History</a>
-            <a href="settings.html" class="nav-link" data-page="settings">Settings</a>
-            <a href="about.html" class="nav-link" data-page="about">About Us</a>
-            <a href="#" class="nav-link" onclick="doLogout()">Logout</a>
+            <a href="./" class="nav-link active">Home</a>
+            <a href="contacts.html" class="nav-link">Contacts</a>
+            <a href="history.html" class="nav-link">History</a>
+            <a href="settings.html" class="nav-link">Settings</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="#" onclick="doLogout()" class="nav-link logout">Logout</a>
         </nav>
     </header>
 
-    <!-- Main content area -->
-    <main class="dashboard-content">
-        <!-- Spinning Globe -->
-        <div class="globe-container">
-            <div class="pixel-globe"></div>
-        </div>
-
-        <!-- Welcome message -->
-        <div class="welcome-message">
-            <h2>Mission Control</h2>
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <!-- Welcome Message -->
+        <div class="welcome-section">
+            <h2>Welcome back, <span class="username-text">Commander</span></h2>
             <p>
-                Welcome back. From here you can manage contacts, review activity,
-                and configure system settings — all from a single control hub.
+                Your command center awaits. Manage contacts, review activity,
+                and configure system settings from this central hub.
             </p>
         </div>
     </main>
