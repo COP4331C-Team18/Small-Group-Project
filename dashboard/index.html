@@ -1,3 +1,4 @@
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Nebulist | Dashboard</title>
@@ -22,32 +23,34 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>NEBULIST</h1>
-        <h2>Mission Control</h2>
+    <!-- Header with title and navigation -->
+    <header class="dashboard-header">
+        <h1 class="dashboard-title">NEBULIST</h1>
+        <nav class="dashboard-nav">
+            <a href="./" class="nav-link active" data-page="home">Home</a>
+            <a href="contacts.html" class="nav-link" data-page="contacts">Contacts</a>
+            <a href="history.html" class="nav-link" data-page="history">History</a>
+            <a href="settings.html" class="nav-link" data-page="settings">Settings</a>
+            <a href="about.html" class="nav-link" data-page="about">About Us</a>
+            <a href="#" class="nav-link" onclick="doLogout()">Logout</a>
+        </nav>
+    </header>
 
-        <!-- Dashboard Card -->
-        <div class="card">
-            <!-- Navigation inside card -->
-            <nav class="nav">
-                <a href="./" class="active">Home</a>
-                <a href="contacts.html">Contacts</a>
-                <a href="history.html">History</a>
-                <a href="settings.html">Settings</a>
-                <a href="about.html">About Us</a>
-                <a href="#" onclick="doLogout()">Logout</a>
-            </nav>
+    <!-- Main content area -->
+    <main class="dashboard-content">
+        <!-- Spinning Globe -->
+        <div class="globe-container">
+            <div class="pixel-globe"></div>
+        </div>
 
+        <!-- Welcome message -->
+        <div class="welcome-message">
+            <h2>Mission Control</h2>
             <p>
                 Welcome back. From here you can manage contacts, review activity,
                 and configure system settings — all from a single control hub.
             </p>
-
-            <div class="buttons">
-                <button onclick="location.href='contacts.html'">Contacts</button>
-                <button onclick="location.href='history.html'">History</button>
-            </div>
         </div>
-    </div>
+    </main>
 </body>
 </html>
