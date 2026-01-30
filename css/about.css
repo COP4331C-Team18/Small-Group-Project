@@ -2,6 +2,15 @@
 .about-main {
   padding-bottom: 60px;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Let the shared .container actually have height to center within */
+.about-main .container {
+  flex: 1;
+  height: auto;
 }
 .main-logo {
   font-size: 3rem;
@@ -18,19 +27,33 @@
 }
 .mission-orbit {
   position: relative;
-  width: 50vw;
-  height: 40vw;
+  /* Prevent the whole mission UI from shrinking below readable sizes */
+  width: clamp(360px, 50vw, 1100px);
+  height: clamp(320px, 40vw, 900px);
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* Size the mission circle via a shared variable so satellites can stay away from it */
+  --mission-d: clamp(300px, 22vw, 520px);
+  --orbit-gap: clamp(50px, 4vw, 140px);
+  --orbit-base: calc(var(--mission-d) * 0.5 + var(--orbit-gap));
+
+  /* Orbit radii (used by keyframes below) */
+  --orbit-r1: calc(var(--orbit-base) + clamp(0px, 1.0vw, 40px));
+  --orbit-r2: calc(var(--orbit-base) + clamp(10px, 1.2vw, 55px));
+  --orbit-r3: calc(var(--orbit-base) + clamp(20px, 1.4vw, 70px));
+  --orbit-r4: calc(var(--orbit-base) + clamp(35px, 1.8vw, 90px));
+  --orbit-r5: calc(var(--orbit-base) + clamp(25px, 1.6vw, 80px));
+  --orbit-r6: calc(var(--orbit-base) + clamp(30px, 1.7vw, 85px));
 }
 .mission-center {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 15vw;
-  height: 15vw;
+  width: var(--mission-d);
+  height: var(--mission-d);
   background: rgba(15, 23, 42, 0.9);
   border: 2px solid rgba(139, 233, 253, 0.4);
   border-radius: 50%;
@@ -39,22 +62,26 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1.5vw;
+  /* Equal breathing room above/below content */
+  padding: clamp(18px, 2vw, 34px);
+  gap: clamp(8px, 1vw, 16px);
+  box-sizing: border-box;
   box-shadow: 0 0 50px rgba(139, 233, 253, 0.3);
   backdrop-filter: blur(10px);
   z-index: 10;
 }
 .mission-center h2 {
   color: #8be9fd;
-  font-size: 1.2vw;
-  margin-bottom: 1vw;
+  font-size: clamp(1.05rem, 1.0vw, 1.45rem);
+  margin: 0;
   text-align: center;
 }
 .mission-center p {
   color: #e6eef8;
-  font-size: 0.8vw;
-  line-height: 1.6;
+  font-size: clamp(0.85rem, 0.75vw, 1.05rem);
+  line-height: 1.5;
   margin: 0;
+  max-width: 90%;
   text-align: center;
 }
 .home-button {
@@ -62,11 +89,11 @@
   border: 1px solid rgba(139, 233, 253, 0.3);
   color: #8be9fd;
   padding: 8px 16px;
-  font-size: 0.7vw;
+  font-size: clamp(0.85rem, 0.7vw, 0.95rem);
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 1vw;
+  margin-top: 0;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -133,14 +160,14 @@
   background: rgba(139, 233, 253, 0.1);
   border: 1px solid rgba(139, 233, 253, 0.3);
   border-radius: 25px;
-  padding: 0.5vw 1vw;
-  font-size: 0.6vw;
+  padding: clamp(10px, 0.5vw, 14px) clamp(14px, 1vw, 18px);
+  font-size: clamp(0.8rem, 0.6vw, 0.95rem);
   color: #e6eef8;
   box-shadow: 0 0 30px rgba(139, 233, 253, 0.4);
   transform: scale(1.05);
   animation: float 3s ease-in-out infinite;
   pointer-events: auto;
-  min-width: 6vw;
+  min-width: clamp(180px, 6vw, 260px);
   position: relative;
   z-index: 10;
   opacity: 1;
@@ -188,28 +215,28 @@
 }
 /* Orbital animations with larger radius */
 @keyframes orbit1 {
-  0% { transform: rotate(180deg) translateX(16vw) rotate(-180deg); }
-  100% { transform: rotate(540deg) translateX(16vw) rotate(-540deg); }
+  0% { transform: rotate(180deg) translateX(var(--orbit-r1)) rotate(-180deg); }
+  100% { transform: rotate(540deg) translateX(var(--orbit-r1)) rotate(-540deg); }
 }
 @keyframes orbit2 {
-  0% { transform: rotate(185deg) translateX(14vw) rotate(-185deg); }
-  100% { transform: rotate(545deg) translateX(14vw) rotate(-545deg); }
+  0% { transform: rotate(185deg) translateX(var(--orbit-r2)) rotate(-185deg); }
+  100% { transform: rotate(545deg) translateX(var(--orbit-r2)) rotate(-545deg); }
 }
 @keyframes orbit3 {
-  0% { transform: rotate(190deg) translateX(17vw) rotate(-190deg); }
-  100% { transform: rotate(550deg) translateX(17vw) rotate(-550deg); }
+  0% { transform: rotate(190deg) translateX(var(--orbit-r3)) rotate(-190deg); }
+  100% { transform: rotate(550deg) translateX(var(--orbit-r3)) rotate(-550deg); }
 }
 @keyframes orbit4 {
-  0% { transform: rotate(195deg) translateX(20vw) rotate(-195deg); }
-  100% { transform: rotate(555deg) translateX(20vw) rotate(-555deg); }
+  0% { transform: rotate(195deg) translateX(var(--orbit-r4)) rotate(-195deg); }
+  100% { transform: rotate(555deg) translateX(var(--orbit-r4)) rotate(-555deg); }
 }
 @keyframes orbit5 {
-  0% { transform: rotate(200deg) translateX(18vw) rotate(-200deg); }
-  100% { transform: rotate(560deg) translateX(18vw) rotate(-560deg); }
+  0% { transform: rotate(200deg) translateX(var(--orbit-r5)) rotate(-200deg); }
+  100% { transform: rotate(560deg) translateX(var(--orbit-r5)) rotate(-560deg); }
 }
 @keyframes orbit6 {
-  0% { transform: rotate(205deg) translateX(19vw) rotate(-205deg); }
-  100% { transform: rotate(565deg) translateX(19vw) rotate(-565deg); }
+  0% { transform: rotate(205deg) translateX(var(--orbit-r6)) rotate(-205deg); }
+  100% { transform: rotate(565deg) translateX(var(--orbit-r6)) rotate(-565deg); }
 }
 /* Add some floating motion on hover */
 .satellite:hover .satellite-text {
