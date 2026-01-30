@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <title>Nebulist | Dashboard</title>
 
-    <!-- Google Fonts -->
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap" rel="stylesheet">
 
     <!-- Styles -->
@@ -16,34 +16,32 @@
     <!-- Auth Guard -->
     <script defer>
         readCookie();
-
-        // Not logged in → redirect to login
-        if (typeof userId === "undefined" || userId <= 0) {
-            window.location.href = "../login.html";
+        if (userId <= 0) {
+            window.location.href = "/login.html";
         }
     </script>
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <a href="./" class="active">Home</a>
-        <a href="contacts.html">Contacts</a>
-        <a href="history.html">History</a>
-        <a href="settings.html">Settings</a>
-        <a href="about.html">About Us</a>
-        <a href="#" onclick="doLogout()">Logout</a>
-    </nav>
-
-    <!-- Main Content -->
     <div class="container">
-        <h1>DASHBOARD</h1>
-        <h2>Welcome back, Commander</h2>
+        <h1>NEBULIST</h1>
+        <h2>Mission Control</h2>
 
+        <!-- Dashboard Card -->
         <div class="card">
+            <!-- Navigation inside card -->
+            <nav class="nav">
+                <a href="./" class="active">Home</a>
+                <a href="contacts.html">Contacts</a>
+                <a href="history.html">History</a>
+                <a href="settings.html">Settings</a>
+                <a href="about.html">About Us</a>
+                <a href="#" onclick="doLogout()">Logout</a>
+            </nav>
+
             <p>
-                This is your central control hub.  
-                Navigate system modules, review historical activity, and manage operational settings.
+                Welcome back. From here you can manage contacts, review activity,
+                and configure system settings — all from a single control hub.
             </p>
 
             <div class="buttons">
@@ -51,10 +49,6 @@
                 <button onclick="location.href='history.html'">History</button>
             </div>
         </div>
-
-        <footer>
-            © 2026 Nebulist Systems
-        </footer>
     </div>
 </body>
 </html>
