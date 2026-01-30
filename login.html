@@ -1,14 +1,5 @@
 <html>
 <head>
-    <script>
-        window.onload = function () {
-            readCookie();
-            if (userId > 0) {
-            window.location.href = "dashboard.html";
-            }
-        };
-    </script>
-
     <meta charset="UTF-8">
     <title>Nebulist | Login</title>
 
@@ -20,6 +11,15 @@
 
     <!-- Login Logic -->
     <script src="js/code.js"></script>
+
+    <script>
+    window.onload = function () {
+        readCookie();
+        if (userId > 0) {
+        window.location.href = "dashboard.html";
+        }
+    };
+    </script>
 </head>
 
 <body>
