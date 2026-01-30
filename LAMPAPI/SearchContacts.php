@@ -30,18 +30,18 @@
   {
     // returned search results prioritize first name matches over last name matches
     $statement = $conn->prepare("
-    SELECT ID, FirstName, LastName, Phone, Email
+    SELECT ID, Firstname, Lastname, Phone, Email
     FROM Contacts
     WHERE UserID = ?
-      AND (FirstName LIKE ? OR LastName LIKE ?)
+      AND (Firstname LIKE ? OR Lastname LIKE ?)
     ORDER BY
       CASE
-        WHEN FirstName LIKE ? THEN 0
-        WHEN LastName LIKE ? THEN 1
+        WHEN Firstname LIKE ? THEN 0
+        WHEN Lastname LIKE ? THEN 1
         ELSE 2
       END,
-      FirstName ASC,
-      LastName ASC
+      Firstname ASC,
+      Lastname ASC
     ");
 
     $searchVal = "%" . $inputData["search"] . "%";

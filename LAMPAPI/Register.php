@@ -22,7 +22,7 @@
     else 
     {
         //inserts into table Users
-        $stmt = $conn->prepare("INSERT INTO Users (FirstName, LastName, Username, Password, Email, Phone) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO Users (Firstname, Lastname, Username, Password, Email, Phone) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssss", $firstName, $lastName, $username, $password, $email, $phone);
         
         
