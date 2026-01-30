@@ -1,0 +1,270 @@
+/* About page specific styles */
+.about-main {
+  padding-bottom: 60px;
+  min-height: 100vh;
+}
+.main-logo {
+  font-size: 3rem;
+  color: #8be9fd;
+  text-align: center;
+  margin: 40px 0 20px 0;
+  font-family: 'Orbitron', sans-serif;
+}
+.mission-section {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mission-orbit {
+  position: relative;
+  width: 50vw;
+  height: 40vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mission-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15vw;
+  height: 15vw;
+  background: rgba(15, 23, 42, 0.9);
+  border: 2px solid rgba(139, 233, 253, 0.4);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5vw;
+  box-shadow: 0 0 50px rgba(139, 233, 253, 0.3);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+.mission-center h2 {
+  color: #8be9fd;
+  font-size: 1.2vw;
+  margin-bottom: 1vw;
+  text-align: center;
+}
+.mission-center p {
+  color: #e6eef8;
+  font-size: 0.8vw;
+  line-height: 1.6;
+  margin: 0;
+  text-align: center;
+}
+.home-button {
+  background: rgba(139, 233, 253, 0.1);
+  border: 1px solid rgba(139, 233, 253, 0.3);
+  color: #8be9fd;
+  padding: 8px 16px;
+  font-size: 0.7vw;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1vw;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.home-button:hover {
+  background: rgba(139, 233, 253, 0.2);
+  box-shadow: 0 0 10px rgba(139, 233, 253, 0.4);
+}
+.team-members {
+  text-align: center;
+}
+.team-members p {
+  margin: 0;
+  line-height: 1.8;
+}
+.site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 15px 0;
+  background: rgba(15, 23, 42, 0.9);
+  border-top: 1px solid rgba(139, 233, 253, 0.2);
+}
+/* Floating Satellites Animation */
+.satellite {
+  position: absolute;
+  animation: float 20s infinite linear;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.satellite-text {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: rgba(139, 233, 253, 0.8);
+  border: 1px solid rgba(139, 233, 253, 0.6);
+  border-radius: 50%;
+  padding: 0;
+  font-size: 0;
+  color: transparent;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.3;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 10px rgba(139, 233, 253, 0.5);
+  transition: all 0.3s ease, opacity 0s 0.3s;
+  animation: blink 2s ease-in-out infinite;
+  pointer-events: none;
+  opacity: 0;
+}
+.text-content {
+  opacity: 0;
+  transition: opacity 0s;
+}
+.satellite:hover .satellite-text {
+  width: auto;
+  height: auto;
+  background: rgba(139, 233, 253, 0.1);
+  border: 1px solid rgba(139, 233, 253, 0.3);
+  border-radius: 25px;
+  padding: 0.5vw 1vw;
+  font-size: 0.6vw;
+  color: #e6eef8;
+  box-shadow: 0 0 30px rgba(139, 233, 253, 0.4);
+  transform: scale(1.05);
+  animation: float 3s ease-in-out infinite;
+  pointer-events: auto;
+  min-width: 6vw;
+  position: relative;
+  z-index: 10;
+  opacity: 1;
+}
+.satellite:hover .text-content {
+  opacity: 1;
+  transition: opacity 0s 0.3s;
+}
+/* Individual satellite orbits with larger radius */
+.satellite-1 {
+  animation: orbit1 25s infinite linear;
+}
+.satellite-1 .satellite-text {
+  animation: blink 2s ease-in-out infinite;
+}
+.satellite-2 {
+  animation: orbit2 30s infinite linear;
+}
+.satellite-2 .satellite-text {
+  animation: blink 2s ease-in-out infinite;
+}
+.satellite-3 {
+  animation: orbit3 35s infinite linear;
+}
+.satellite-3 .satellite-text {
+  animation: blink 2s ease-in-out infinite;
+}
+.satellite-4 {
+  animation: orbit4 28s infinite linear;
+}
+.satellite-4 .satellite-text {
+  animation: blink 2s ease-in-out infinite;
+}
+.satellite-5 {
+  animation: orbit5 32s infinite linear;
+}
+.satellite-5 .satellite-text {
+  animation: blink 2s ease-in-out infinite;
+}
+.satellite-6 {
+  animation: orbit6 40s infinite linear;
+}
+.satellite-6 .satellite-text {
+  animation: blink 2s ease-in-out infinite;
+}
+/* Orbital animations with larger radius */
+@keyframes orbit1 {
+  0% { transform: rotate(180deg) translateX(16vw) rotate(-180deg); }
+  100% { transform: rotate(540deg) translateX(16vw) rotate(-540deg); }
+}
+@keyframes orbit2 {
+  0% { transform: rotate(185deg) translateX(14vw) rotate(-185deg); }
+  100% { transform: rotate(545deg) translateX(14vw) rotate(-545deg); }
+}
+@keyframes orbit3 {
+  0% { transform: rotate(190deg) translateX(17vw) rotate(-190deg); }
+  100% { transform: rotate(550deg) translateX(17vw) rotate(-550deg); }
+}
+@keyframes orbit4 {
+  0% { transform: rotate(195deg) translateX(20vw) rotate(-195deg); }
+  100% { transform: rotate(555deg) translateX(20vw) rotate(-555deg); }
+}
+@keyframes orbit5 {
+  0% { transform: rotate(200deg) translateX(18vw) rotate(-200deg); }
+  100% { transform: rotate(560deg) translateX(18vw) rotate(-560deg); }
+}
+@keyframes orbit6 {
+  0% { transform: rotate(205deg) translateX(19vw) rotate(-205deg); }
+  100% { transform: rotate(565deg) translateX(19vw) rotate(-565deg); }
+}
+/* Add some floating motion on hover */
+.satellite:hover .satellite-text {
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+}
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0.3; }
+}
+@keyframes popout {
+  0%, 1.67%, 18.33%, 20%, 100% {
+    width: 8px;
+    height: 8px;
+    background: rgba(139, 233, 253, 0.8);
+    border: 1px solid rgba(139, 233, 253, 0.6);
+    border-radius: 50%;
+    padding: 0;
+    font-size: 0;
+    color: transparent;
+    box-shadow: 0 0 10px rgba(139, 233, 253, 0.5);
+    transform: scale(1);
+  }
+  3%, 17% {
+    width: auto;
+    height: auto;
+    background: rgba(139, 233, 253, 0.1);
+    border: 1px solid rgba(139, 233, 253, 0.3);
+    border-radius: 25px;
+    padding: 0.5vw 1vw;
+    font-size: 0.6vw;
+    color: #e6eef8;
+    box-shadow: 0 0 30px rgba(139, 233, 253, 0.4);
+    transform: scale(1.05);
+    min-width: 6vw;
+  }
+}
+/* Add orbital trails */
+.satellite::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: rgba(139, 233, 253, 0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: trail 1s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes trail {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+}
