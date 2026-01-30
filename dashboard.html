@@ -1,12 +1,5 @@
 <html>
   <head>
-    <script src="js/code.js"></script>
-    <script>
-      window.onload = function () {
-        readCookie(); // kicks user out if not logged in
-      };
-    </script>
-
     <meta charset="UTF-8">
     <title>Nebulist | Login</title>
 
@@ -15,6 +8,14 @@
 
     <!-- Main Styles -->
     <link href="css/styles.css" rel="stylesheet">
+    <script src="js/code.js" defer></script>
+    <script defer>
+      readCookie();
+      if (userId > 0) {
+          window.location.href = "dashboard.html";
+      }
+    </script>
+
   </head>
   
   <body>
