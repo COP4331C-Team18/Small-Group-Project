@@ -1,0 +1,123 @@
+/* Page Background */
+body {
+    height: 100vh;
+    font-family: "Ubuntu", sans-serif;
+    color: #ffffff;
+    background: radial-gradient(circle at top, #1b2735 0%, #090a0f 100%);
+    overflow: hidden;
+}
+
+/* Animated Star Field */
+body::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: url("https://www.transparenttextures.com/patterns/stardust.png");
+    animation: drift 120s linear infinite;
+    opacity: 0.4;
+    z-index: 0;
+}
+
+@keyframes drift {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Layout Container */
+.container {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Headings */
+h1 {
+    font-family: "Orbitron", sans-serif;
+    font-size: 3.5rem;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    color: #8be9fd;
+}
+
+h2 {
+    font-weight: 300;
+    margin-bottom: 30px;
+    color: #cbd5e1;
+}
+
+/* Card */
+.card {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(139, 233, 253, 0.3);
+    border-radius: 16px;
+    padding: 30px 40px;
+    max-width: 420px;
+    box-shadow: 0 0 40px rgba(139, 233, 253, 0.15);
+}
+
+.card p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+button {
+    font-family: "Orbitron", sans-serif;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    color: #0f172a;
+    background: linear-gradient(135deg, #8be9fd, #a78bfa);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(139, 233, 253, 0.6);
+}
+
+/* User Input */
+input {
+    font-family: "Orbitron", sans-serif;
+    padding: 12px 16px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    border-radius: 10px;
+    border: 1px solid rgba(139, 233, 253, 0.3);
+    background: rgba(15, 23, 42, 0.9);
+    color: #e5e7eb;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    outline: none;
+}
+
+input::placeholder {
+    color: #94a3b8;
+}
+
+input:focus {
+    border-color: #8be9fd;
+    box-shadow: 0 0 8px rgba(139, 233, 253, 0.4);
+}
+
