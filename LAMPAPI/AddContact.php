@@ -12,7 +12,7 @@
     $userId = $inData['UserID'];
 
     // Connect to the database
-    $conn = new mysqli("localhost", username: "TheBeast", "WeLoveCOP4331", "NEBULIST");
+    $conn = new mysqli("localhost","TheBeast", "WeLoveCOP4331", "NEBULIST");
 
     if ($conn->connect_error) 
     {
