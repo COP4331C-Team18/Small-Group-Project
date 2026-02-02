@@ -11,10 +11,13 @@
 
     <script src="js/code.js" defer></script>
     <script defer>
-        readCookie();
-        if (userId > 0) {
-            window.location.href = "dashboard.html";
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            readCookie();
+
+            if (userId > 0) {
+                window.location.href = "/dashboard/";
+            }
+        });
     </script>
 
   </head>
@@ -28,7 +31,7 @@
               <p>
                   Nebulist is an <strong>open source personal contact manager</strong>
                   built to securely store, search, and manage your contacts
-                  with speed and clarity anywhere in the universe. Find out more <a href="/about.html">About Us</a>!
+                  with speed and clarity anywhere in the universe.
               </p>
   
               <div class="buttons">

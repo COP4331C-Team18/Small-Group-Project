@@ -46,7 +46,7 @@ function doLogin()
 
 				saveCookie();
 	
-				window.location.href = "dashboard.html";
+				window.location.href = "dashboard/";
 			}
 		};
 		xhr.send(jsonPayload);
@@ -99,13 +99,21 @@ function readCookie()
 	}
 }
 
+function getUserName()
+{
+	if (firstName && lastName)
+		return firstName + " " + lastName;
+	else
+		return "Commander";
+}
+
 function doLogout()
 {
 	userId = 0;
 	firstName = "";
 	lastName = "";
 	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-	window.location.href = "index.html";
+	window.location.href = "/";
 }
 
 function addColor()
