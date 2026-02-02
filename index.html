@@ -11,10 +11,13 @@
 
     <script src="js/code.js" defer></script>
     <script defer>
-        readCookie();
-        if (userId > 0) {
-            window.location.href = "dashboard.html";
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            readCookie();
+
+            if (userId > 0) {
+                window.location.href = "/dashboard/";
+            }
+        });
     </script>
 
   </head>
