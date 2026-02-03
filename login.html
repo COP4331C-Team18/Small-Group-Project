@@ -11,11 +11,11 @@
     <!-- Login Logic -->
     <script src="js/code.js" defer></script>
     <script defer>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener("DOMContentLoaded", async () => {
             readCookie();
 
             if (userId > 0) {
-                window.location.href = "/dashboard/";
+                window.location.replace("/dashboard/");
             }
         });
     </script>
