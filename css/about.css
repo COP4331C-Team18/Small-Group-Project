@@ -18,8 +18,9 @@
 }
 .mission-orbit {
   position: relative;
-  width: 50vw;
-  height: 40vw;
+  /* Keep the mission scene at its 1080p design size (no viewport-based shrinking). */
+  width: 960px;
+  height: 768px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,8 +30,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 15vw;
-  height: 15vw;
+  width: 288px;
+  height: 288px;
   background: rgba(15, 23, 42, 0.9);
   border: 2px solid rgba(139, 233, 253, 0.4);
   border-radius: 50%;
@@ -39,41 +40,23 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1.5vw;
+  padding: 28px;
   box-shadow: 0 0 50px rgba(139, 233, 253, 0.3);
   backdrop-filter: blur(10px);
   z-index: 10;
 }
 .mission-center h2 {
   color: #8be9fd;
-  font-size: 1.2vw;
-  margin-bottom: 1vw;
+  font-size: 23px;
+  margin-bottom: 19px;
   text-align: center;
 }
 .mission-center p {
   color: #e6eef8;
-  font-size: 0.8vw;
+  font-size: 15px;
   line-height: 1.6;
   margin: 0;
   text-align: center;
-}
-.home-button {
-  background: rgba(139, 233, 253, 0.1);
-  border: 1px solid rgba(139, 233, 253, 0.3);
-  color: #8be9fd;
-  padding: 8px 16px;
-  font-size: 0.7vw;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1vw;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-.home-button:hover {
-  background: rgba(139, 233, 253, 0.2);
-  box-shadow: 0 0 10px rgba(139, 233, 253, 0.4);
 }
 .team-members {
   text-align: center;
@@ -133,14 +116,14 @@
   background: rgba(139, 233, 253, 0.1);
   border: 1px solid rgba(139, 233, 253, 0.3);
   border-radius: 25px;
-  padding: 0.5vw 1vw;
-  font-size: 0.6vw;
+  padding: 10px 18px;
+  font-size: 12px;
   color: #e6eef8;
   box-shadow: 0 0 30px rgba(139, 233, 253, 0.4);
   transform: scale(1.05);
   animation: float 3s ease-in-out infinite;
   pointer-events: auto;
-  min-width: 6vw;
+  min-width: 115px;
   position: relative;
   z-index: 10;
   opacity: 1;
@@ -188,28 +171,28 @@
 }
 /* Orbital animations with larger radius */
 @keyframes orbit1 {
-  0% { transform: rotate(180deg) translateX(16vw) rotate(-180deg); }
-  100% { transform: rotate(540deg) translateX(16vw) rotate(-540deg); }
+  0% { transform: rotate(180deg) translateX(307px) rotate(-180deg); }
+  100% { transform: rotate(540deg) translateX(307px) rotate(-540deg); }
 }
 @keyframes orbit2 {
-  0% { transform: rotate(185deg) translateX(14vw) rotate(-185deg); }
-  100% { transform: rotate(545deg) translateX(14vw) rotate(-545deg); }
+  0% { transform: rotate(185deg) translateX(269px) rotate(-185deg); }
+  100% { transform: rotate(545deg) translateX(269px) rotate(-545deg); }
 }
 @keyframes orbit3 {
-  0% { transform: rotate(190deg) translateX(17vw) rotate(-190deg); }
-  100% { transform: rotate(550deg) translateX(17vw) rotate(-550deg); }
+  0% { transform: rotate(190deg) translateX(326px) rotate(-190deg); }
+  100% { transform: rotate(550deg) translateX(326px) rotate(-550deg); }
 }
 @keyframes orbit4 {
-  0% { transform: rotate(195deg) translateX(20vw) rotate(-195deg); }
-  100% { transform: rotate(555deg) translateX(20vw) rotate(-555deg); }
+  0% { transform: rotate(195deg) translateX(384px) rotate(-195deg); }
+  100% { transform: rotate(555deg) translateX(384px) rotate(-555deg); }
 }
 @keyframes orbit5 {
-  0% { transform: rotate(200deg) translateX(18vw) rotate(-200deg); }
-  100% { transform: rotate(560deg) translateX(18vw) rotate(-560deg); }
+  0% { transform: rotate(200deg) translateX(346px) rotate(-200deg); }
+  100% { transform: rotate(560deg) translateX(346px) rotate(-560deg); }
 }
 @keyframes orbit6 {
-  0% { transform: rotate(205deg) translateX(19vw) rotate(-205deg); }
-  100% { transform: rotate(565deg) translateX(19vw) rotate(-565deg); }
+  0% { transform: rotate(205deg) translateX(365px) rotate(-205deg); }
+  100% { transform: rotate(565deg) translateX(365px) rotate(-565deg); }
 }
 /* Add some floating motion on hover */
 .satellite:hover .satellite-text {
@@ -242,12 +225,12 @@
     background: rgba(139, 233, 253, 0.1);
     border: 1px solid rgba(139, 233, 253, 0.3);
     border-radius: 25px;
-    padding: 0.5vw 1vw;
-    font-size: 0.6vw;
+    padding: 10px 18px;
+    font-size: 12px;
     color: #e6eef8;
     box-shadow: 0 0 30px rgba(139, 233, 253, 0.4);
     transform: scale(1.05);
-    min-width: 6vw;
+    min-width: 115px;
   }
 }
 /* Add orbital trails */
@@ -267,4 +250,108 @@
 @keyframes trail {
   0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
   100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+}
+
+/* Responsive: keep fixed-size scene on desktop; switch to a stacked, touch-friendly UI on smaller screens. */
+@media (max-width: 1050px), (max-height: 920px) {
+  body {
+    overflow-y: auto;
+  }
+
+  .dashboard-main {
+    height: auto;
+    min-height: calc(100vh - 180px);
+    overflow: visible;
+    padding: 140px 20px;
+  }
+
+  .mission-section {
+    margin-bottom: 20px;
+  }
+
+  .mission-orbit {
+    width: 100%;
+    height: auto;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
+  .mission-center {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    height: auto;
+    border-radius: 18px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .mission-center h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .mission-center p {
+    font-size: 15px;
+  }
+
+  .satellite {
+    position: static;
+    width: 100%;
+    height: auto;
+    animation: none !important;
+    justify-content: flex-start;
+  }
+
+  .satellite::after {
+    display: none;
+  }
+
+  .satellite-text,
+  .satellite:hover .satellite-text {
+    opacity: 1;
+    width: 100%;
+    height: auto;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #e6eef8;
+    background: rgba(139, 233, 253, 0.08);
+    border: 1px solid rgba(139, 233, 253, 0.25);
+    border-radius: 14px;
+    box-shadow: 0 0 20px rgba(139, 233, 253, 0.25);
+    animation: none;
+    pointer-events: auto;
+    text-align: left;
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .text-content {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .mission-orbit {
+    max-width: 100%;
+  }
+
+  .mission-center {
+    padding: 16px;
+  }
+
+  .mission-center h2 {
+    font-size: 20px;
+  }
+
+  .mission-center p {
+    font-size: 14px;
+  }
 }
