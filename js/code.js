@@ -46,7 +46,7 @@ function doLogin()
 
 				saveCookie();
 	
-				window.location.href = "dashboard.html";
+				window.location.href = "dashboard/";
 			}
 		};
 		xhr.send(jsonPayload);
@@ -63,7 +63,12 @@ function saveCookie()
 	let minutes = 20;
 	let date = new Date();
 	date.setTime(date.getTime()+(minutes*60*1000));	
-	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+	document.cookie =
+		"firstName=" + firstName +
+		",lastName=" + lastName +
+		",userId=" + userId +
+		";expires=" + date.toGMTString() +
+		";path=/";
 }
 
 function readCookie()
@@ -88,24 +93,28 @@ function readCookie()
 			userId = parseInt( tokens[1].trim() );
 		}
 	}
-	
-	if( userId < 0 )
-	{
-		window.location.href = "index.html";
-	}
+}
+
+function getUserName()
+{
+	if (firstName && lastName)
+		return firstName + " " + lastName;
 	else
-	{
-//		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
-	}
+		return "Commander";
 }
 
 function doLogout()
 {
-	userId = 0;
-	firstName = "";
-	lastName = "";
-	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-	window.location.href = "index.html";
+    userId = 0;
+    firstName = "";
+    lastName = "";
+
+    // Delete ALL cookies with the SAME path
+    document.cookie = "firstName=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+    document.cookie = "lastName=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+    document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+
+    window.location.replace("/login.html");
 }
 
 function addColor()
@@ -113,7 +122,7 @@ function addColor()
 	let newColor = document.getElementById("colorText").value;
 	document.getElementById("colorAddResult").innerHTML = "";
 
-	let tmp = {color:newColor,userId,userId};
+	let tmp = { color: newColor, userId: userId };
 	let jsonPayload = JSON.stringify( tmp );
 
 	let url = urlBase + '/AddColor.' + extension;
