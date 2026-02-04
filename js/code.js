@@ -63,7 +63,12 @@ function saveCookie()
 	let minutes = 20;
 	let date = new Date();
 	date.setTime(date.getTime()+(minutes*60*1000));	
-	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+	document.cookie =
+		"firstName=" + firstName +
+		",lastName=" + lastName +
+		",userId=" + userId +
+		";expires=" + date.toGMTString() +
+		";path=/";
 }
 
 function readCookie()
@@ -100,11 +105,16 @@ function getUserName()
 
 function doLogout()
 {
-	userId = 0;
-	firstName = "";
-	lastName = "";
-	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-	window.location.href = "/";
+    userId = 0;
+    firstName = "";
+    lastName = "";
+
+    // Delete ALL cookies with the SAME path
+    document.cookie = "firstName=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+    document.cookie = "lastName=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+    document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+
+    window.location.replace("/login.html");
 }
 
 function addColor()
