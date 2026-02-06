@@ -10,7 +10,6 @@
     $username = $inData['Username'];
     $password = $inData['Password'];
     $email = $inData['Email'];
-    $phone = $inData['Phone'];
 
     // Connect to the database
     $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "NEBULIST");
@@ -22,8 +21,8 @@
     else 
     {
         //inserts into table Users
-        $stmt = $conn->prepare("INSERT INTO Users (Firstname, Lastname, Username, Password, Email, Phone) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssss", $firstName, $lastName, $username, $password, $email, $phone);
+        $stmt = $conn->prepare("INSERT INTO Users (Firstname, Lastname, Username, Password, Email) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $firstName, $lastName, $username, $password, $email);
         
         
         if ($stmt->execute()) 

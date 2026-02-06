@@ -125,12 +125,11 @@ function doRegister()
     let password  = document.getElementById("password").value;
     let confirm   = document.getElementById("confirmPassword").value;
     let email     = document.getElementById("email").value.trim();
-    let phone     = document.getElementById("phone").value.trim();
 
     let result = document.getElementById("registerResult");
     result.innerHTML = "";
 
-    if (!firstName || !lastName || !username || !email || !phone)
+    if (!firstName || !lastName || !username || !email)
     {
         result.innerHTML = "All fields are required.";
         return;
@@ -154,7 +153,6 @@ function doRegister()
         Username: username,
         Password: password,
         Email: email,
-        Phone: phone
     };
 
     let jsonPayload = JSON.stringify(tmp);
