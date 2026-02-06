@@ -12,8 +12,8 @@
   }
 
   $userId = $inputData["userId"];
-  $startIdx = $inputData["startIdx"];
-  $count = $inputData["count"];
+  $startIdx = $inputData["startIdx"];   //  zero-based index
+  $count = $inputData["count"];    //  number of records to fetch
 
   
   // Connect to NEBULIST db
@@ -24,18 +24,23 @@
       return;
   }
 
-  // Prepare and execute SQL query
   $statement = $conn->prepare("SELECT Firstname, Lastname, Email, Phone FROM Contacts WHERE UserID = ? LIMIT ? OFFSET ?");
   $statement->bind_param("iii", $userId, $count, $startIdx);
   $statement->execute();
   $result = $statement->get_result();
   
-  if( $row = $result->fetch_assoc()  ) {
-	returnWithInfo( $row['Firstname'], $row['Lastname'], $row['Email'], $row['Phone'] );
-   }
-   else {
+  $rows = [];
+
+  while ($row = $result->fetch_assoc()) {
+    $rows[] = $row;
+  }
+
+  if (count($rows) == 0) {
     returnWithError("No Contacts Found");
-   }
+  } else {
+    returnWithInfo($rows);
+  }
+
   $statement->close();
   $conn->close();
 
@@ -55,9 +60,10 @@
       sendResultInfoAsJson($retValue);
   }
 
-  function returnWithInfo($firstname, $lastname, $email, $phone) {
-      $retValue = '{"results":[{"Firstname":"' . $firstname . '","Lastname":"' . $lastname . '","Email":"' . $email . '","Phone":"' . $phone . '"}],"error":""}';
-      sendResultInfoAsJson($retValue);
+  function returnWithInfo($rows) {
+    $retValue = '{"results":' . json_encode($rows) . ',"error":""}';
+    sendResultInfoAsJson($retValue);
   }
+
 
 ?>
