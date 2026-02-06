@@ -130,8 +130,6 @@ function doRegister()
     let result = document.getElementById("registerResult");
     result.innerHTML = "";
 
-    /* ---------- Client-side validation ---------- */
-
     if (!firstName || !lastName || !username || !email || !phone)
     {
         result.innerHTML = "All fields are required.";
@@ -150,8 +148,6 @@ function doRegister()
         return;
     }
 
-    /* ---------- Payload (MATCHES DB CASE) ---------- */
-
     let tmp = {
         Firstname: firstName,
         Lastname: lastName,
@@ -162,7 +158,7 @@ function doRegister()
     };
 
     let jsonPayload = JSON.stringify(tmp);
-    let url = urlBase + '/register.' + extension;
+    let url = urlBase + '/Register.' + extension;
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
