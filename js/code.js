@@ -117,6 +117,64 @@ function doLogout()
     window.location.replace("/login.html");
 }
 
+function doRegister()
+{
+    let firstName = document.getElementById("firstName").value;
+    let lastName  = document.getElementById("lastName").value;
+    let username  = document.getElementById("username").value;
+    let password  = document.getElementById("password").value;
+    let email     = document.getElementById("email").value;
+    let phone     = document.getElementById("phone").value;
+
+    document.getElementById("registerResult").innerHTML = "";
+
+    let tmp = {
+        Firstname: firstName,
+        Lastname: lastName,
+        Username: username,
+        Password: password,
+        Email: email,
+        Phone: phone
+    };
+
+    let jsonPayload = JSON.stringify(tmp);
+    let url = urlBase + '/register.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try
+    {
+        xhr.onreadystatechange = function()
+        {
+            if (this.readyState === 4)
+            {
+                let response = JSON.parse(xhr.responseText);
+
+                if (response.error && response.error.length > 0)
+                {
+                    document.getElementById("registerResult").innerHTML = response.error;
+                }
+                else
+                {
+                    document.getElementById("registerResult").innerHTML =
+                        "Registration successful! Redirecting to login...";
+
+                    setTimeout(() => {
+                        window.location.href = "login.html";
+                    }, 1500);
+                }
+            }
+        };
+        xhr.send(jsonPayload);
+    }
+    catch(err)
+    {
+        document.getElementById("registerResult").innerHTML = err.message;
+    }
+}
+
 function addColor()
 {
 	let newColor = document.getElementById("colorText").value;
