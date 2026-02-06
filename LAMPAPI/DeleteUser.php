@@ -4,6 +4,12 @@
 
     $inData = getRequestInfo();
 
+    // Validate required fields
+    if (!isset($inData["ID"])) {
+        returnWithError("Missing required fields");
+        return;
+    }
+
     $userId = $inData['ID'];
 
     $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "NEBULIST");
