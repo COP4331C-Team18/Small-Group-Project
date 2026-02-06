@@ -1,22 +1,17 @@
 <?php
-
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
     $inData = getRequestInfo();
 
     // Validate required fields
-    if (!isset($inData["Firstname"]) || !isset($inData["Lastname"]) || !isset($inData["Username"]) || !isset($inData["Password"]) || !isset($inData["Email"]) || !isset($inData["Phone"])) {
-      returnWithError("Missing required fields");
-      return;
+    if (!isset($inData["userId"]) || !isset($inData["id"])) {
+        returnWithError("Missing required fields");
+        return;
     }
-
-    $firstName = $inData['Firstname'];
-    $lastName = $inData['Lastname'];
-    $username = $inData['Username'];
-    $password = $inData['Password'];
-    $email = $inData['Email'];
-    $phone = $inData['Phone'];
+    // Payload variables
+    $userId = $inData['userId'];
+    $contactId = $inData['id'];
 
     // Connect to the database
     $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "NEBULIST");
@@ -27,18 +22,23 @@
     } 
     else 
     {
-        //inserts into table Users
-        $stmt = $conn->prepare("INSERT INTO Users (Firstname, Lastname, Username, Password, Email, Phone) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssss", $firstName, $lastName, $username, $password, $email, $phone);
-        
+        // Deletes from Contacts table where both IDs match
+        $stmt = $conn->prepare("DELETE FROM Contacts WHERE ID = ? AND UserID = ?");
+        $stmt->bind_param("ii", $contactId, $userId);
         
         if ($stmt->execute()) 
         {
-            returnWithInfo("Registered successfully");
+            if ($stmt->affected_rows > 0)
+            {
+                returnWithInfo("Contact removed successfully");
+            }
+            else
+            {
+                returnWithError("No record found or you do not have permission");
+            }
         } 
         else 
         {
-            // username?/email?/phone? exists in Database
             returnWithError($stmt->error);
         }
 
@@ -46,7 +46,7 @@
         $conn->close();
     }
 
-    // Helpers from Login PHP
+    // --- Helpers ---
 
     function getRequestInfo()
     {
@@ -65,7 +65,6 @@
         sendResultInfoAsJson($retValue);
     }
 
-    //Edited for sending msg
     function returnWithInfo($msg)
     {
         $retValue = '{"message":"' . $msg . '", "error":""}';

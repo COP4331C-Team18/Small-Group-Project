@@ -1,24 +1,17 @@
 <?php
-
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
     $inData = getRequestInfo();
 
     // Validate required fields
-    if (!isset($inData["Firstname"]) || !isset($inData["Lastname"]) || !isset($inData["Username"]) || !isset($inData["Password"]) || !isset($inData["Email"]) || !isset($inData["Phone"])) {
-      returnWithError("Missing required fields");
-      return;
+    if (!isset($inData["ID"])) {
+        returnWithError("Missing required fields");
+        return;
     }
 
-    $firstName = $inData['Firstname'];
-    $lastName = $inData['Lastname'];
-    $username = $inData['Username'];
-    $password = $inData['Password'];
-    $email = $inData['Email'];
-    $phone = $inData['Phone'];
+    $userId = $inData['ID'];
 
-    // Connect to the database
     $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "NEBULIST");
 
     if ($conn->connect_error) 
@@ -27,18 +20,24 @@
     } 
     else 
     {
-        //inserts into table Users
-        $stmt = $conn->prepare("INSERT INTO Users (Firstname, Lastname, Username, Password, Email, Phone) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssss", $firstName, $lastName, $username, $password, $email, $phone);
-        
+        //delete based on the ID we can keep the ID in session
+        $stmt = $conn->prepare("DELETE FROM Users WHERE ID = ?");
+        $stmt->bind_param("i", $userId); 
         
         if ($stmt->execute()) 
         {
-            returnWithInfo("Registered successfully");
+            // did it delete?
+            if ($stmt->affected_rows > 0)
+            {
+                returnWithInfo("User deleted successfully");
+            }
+            else
+            {
+                returnWithError("No user found with that ID");
+            }
         } 
         else 
         {
-            // username?/email?/phone? exists in Database
             returnWithError($stmt->error);
         }
 
@@ -46,7 +45,7 @@
         $conn->close();
     }
 
-    // Helpers from Login PHP
+    // --- Helpers ---
 
     function getRequestInfo()
     {
@@ -65,7 +64,6 @@
         sendResultInfoAsJson($retValue);
     }
 
-    //Edited for sending msg
     function returnWithInfo($msg)
     {
         $retValue = '{"message":"' . $msg . '", "error":""}';
