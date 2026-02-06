@@ -83,103 +83,95 @@
 
   <button class="fab" title="Add Contact" aria-label="Add contact"></button>
 
+  <div class="modal-backdrop" id="addContactModal" aria-hidden="true">
+    <div
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="addContactTitle"
+    >
+      <h2 id="addContactTitle">Add Contact</h2>
+      <form id="addContactForm" autocomplete="off" novalidate>
+        <label>
+          Name
+          <input
+            id="addName"
+            name="name"
+            type="text"
+            placeholder="First Last"
+            required
+          />
+        </label>
+
+        <label>
+          Nickname / Title
+          <input
+            id="addNickname"
+            name="nickname"
+            type="text"
+            placeholder="Title/Nickname"
+          />
+        </label>
+
+        <label>
+          Phone
+          <input
+            id="addPhone"
+            name="phone"
+            type="tel"
+            placeholder="(555) 010-1001"
+          />
+        </label>
+
+        <label>
+          Email
+          <input
+            id="addEmail"
+            name="email"
+            type="email"
+            placeholder="name@example.com"
+          />
+        </label>
+
+        <p class="modal-error" id="addContactError" aria-live="polite"></p>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-action btn-secondary" id="addCancel">
+            Cancel
+          </button>
+          <button type="submit" class="btn-action btn-primary" id="addSave">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      // Populate globals if a cookie exists (no redirect here)
+      if (typeof readCookie === "function") readCookie();
+
       // Search functionality with smooth animations
       const searchInput = document.getElementById("searchInput");
       const contactsGrid = document.getElementById("contactsGrid");
       const emptyState = document.getElementById("emptyState");
 
-      const exampleContacts = [
-        {
-          name: "Alex Chen",
-          roleText: "Title/Nickname",
-          phone: "(555) 010-1001",
-          email: "alex.chen@station.alpha",
-        },
-        {
-          name: "Sarah Kim",
-          roleText: "Title/Nickname",
-          phone: "(555) 010-1002",
-          email: "sarah.kim@nasa.gov",
-        },
-        {
-          name: "Marcus Johnson",
-          roleText: "Title/Nickname",
-          phone: "(555) 010-1003",
-          email: "m.johnson@exo.bio",
-        },
-        {
-          name: "Elena Rodriguez",
-          roleText: "Title/Nickname",
-          phone: "(555) 010-1004",
-          email: "elena.r@spaceforce.mil",
-        },
-        {
-          name: "Dr. Zara Patel",
-          roleText: "Title/Nickname",
-          phone: "(555) 010-1005",
-          email: "z.patel@med.space",
-        },
-        {
-          name: "James Wilson",
-          roleText: "Title/Nickname",
-          phone: "(555) 010-1006",
-          email: "j.wilson@nav.core",
-        },
-      ];
+      const fabBtn = document.querySelector(".fab");
+      const addModal = document.getElementById("addContactModal");
+      const addForm = document.getElementById("addContactForm");
+      const addCancel = document.getElementById("addCancel");
+      const addError = document.getElementById("addContactError");
+      const addName = document.getElementById("addName");
+      const addNickname = document.getElementById("addNickname");
+      const addPhone = document.getElementById("addPhone");
+      const addEmail = document.getElementById("addEmail");
 
-      const cards =
-        window.App && window.App.renderContactCards
-          ? window.App.renderContactCards(contactsGrid, exampleContacts)
-          : contactsGrid.querySelectorAll(".contact-card");
+      const getCards = () => contactsGrid.querySelectorAll(".contact-card");
 
-      contactsGrid.addEventListener("click", (e) => {
-        const deleteBtn = e.target.closest(".delete-contact");
-        if (!deleteBtn) return;
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        const card = deleteBtn.closest(".contact-card");
+      const attachTilt = (card) => {
         if (!card) return;
 
-        card.remove();
-        searchInput.dispatchEvent(new Event("input"));
-      });
-
-      searchInput.addEventListener("input", (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        let visibleCount = 0;
-
-        cards.forEach((card) => {
-          if (!card.isConnected) return;
-
-          const name = card.getAttribute("data-name").toLowerCase();
-          const role = card.getAttribute("data-role").toLowerCase();
-          const details = card.textContent.toLowerCase();
-
-          if (
-            name.includes(searchTerm) ||
-            role.includes(searchTerm) ||
-            details.includes(searchTerm)
-          ) {
-            card.classList.remove("hide");
-            visibleCount++;
-          } else {
-            card.classList.add("hide");
-          }
-        });
-
-        if (visibleCount === 0) {
-          emptyState.classList.add("show");
-        } else {
-          emptyState.classList.remove("show");
-        }
-      });
-
-      // 3D tilt effect on cards (throttled for performance)
-      cards.forEach((card) => {
         let rect = null;
         let rafId = 0;
         let latestX = 0;
@@ -230,11 +222,163 @@
           },
           { passive: true },
         );
+      };
+
+      const updateCardAnimationDelays = () => {
+        getCards().forEach((card, index) => {
+          card.style.animationDelay = `${index * 0.1}s`;
+        });
+      };
+
+      const applyFilter = () => {
+        const searchTerm = (searchInput.value || "").toLowerCase();
+        let visibleCount = 0;
+
+        getCards().forEach((card) => {
+          if (!card.isConnected) return;
+
+          const name = (card.getAttribute("data-name") || "").toLowerCase();
+          const role = (card.getAttribute("data-role") || "").toLowerCase();
+          const details = (card.textContent || "").toLowerCase();
+
+          if (
+            name.includes(searchTerm) ||
+            role.includes(searchTerm) ||
+            details.includes(searchTerm)
+          ) {
+            card.classList.remove("hide");
+            visibleCount++;
+          } else {
+            card.classList.add("hide");
+          }
+        });
+
+        emptyState.classList.toggle("show", visibleCount === 0);
+      };
+
+      const openAddModal = () => {
+        addError.textContent = "";
+        addModal.classList.add("show");
+        addModal.setAttribute("aria-hidden", "false");
+        requestAnimationFrame(() => addName.focus());
+      };
+
+      const closeAddModal = () => {
+        addModal.classList.remove("show");
+        addModal.setAttribute("aria-hidden", "true");
+        addError.textContent = "";
+        addForm.reset();
+      };
+
+      // Example contact data - replace with API data in production
+      const exampleContacts = [
+        {
+          name: "Alex Chen",
+          phone: "(555) 010-1001",
+          email: "alex.chen@station.alpha",
+        },
+        {
+          name: "Sarah Kim",
+          phone: "(555) 010-1002",
+          email: "sarah.kim@nasa.gov",
+        },
+        {
+          name: "Marcus Johnson",
+          phone: "(555) 010-1003",
+          email: "m.johnson@exo.bio",
+        },
+        {
+          name: "Elena Rodriguez",
+          phone: "(555) 010-1004",
+          email: "elena.r@spaceforce.mil",
+        },
+        {
+          name: "Dr. Zara Patel",
+          phone: "(555) 010-1005",
+          email: "z.patel@med.space",
+        },
+        {
+          name: "James Wilson",
+          phone: "(555) 010-1006",
+          email: "j.wilson@nav.core",
+        },
+      ];
+
+      // render example cards
+      exampleContacts.forEach((contact) =>
+        contactsGrid.appendChild(window.App.createContactCard(contact, true)),
+      );
+      getCards().forEach(attachTilt);
+      updateCardAnimationDelays();
+      applyFilter();
+
+      // delete contact
+      contactsGrid.addEventListener("click", (e) => {
+        const deleteBtn = e.target.closest(".delete-contact");
+        if (!deleteBtn) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        const card = deleteBtn.closest(".contact-card");
+        if (!card) return;
+
+        card.remove();
+        applyFilter();
       });
 
-      // Random floating animation for cards
-      cards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
+      // search filter with animation
+      searchInput.addEventListener("input", applyFilter);
+
+      fabBtn.addEventListener("click", () => {
+        openAddModal();
+      });
+
+      addCancel.addEventListener("click", closeAddModal);
+      addModal.addEventListener("click", (e) => {
+        if (e.target === addModal) closeAddModal();
+      });
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && addModal.classList.contains("show")) {
+          closeAddModal();
+        }
+      });
+
+      addForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        addError.textContent = "";
+
+        const nameVal = (addName.value || "").trim();
+        const nickVal = (addNickname.value || "").trim();
+        const phoneVal = (addPhone.value || "").trim();
+        const emailVal = (addEmail.value || "").trim();
+
+        if (!nameVal) {
+          addError.textContent = "Name is required.";
+          addName.focus();
+          return;
+        }
+
+        if (!(typeof userId === "number" && userId > 0)) {
+          addError.textContent = "Please log in to save contacts.";
+          return;
+        }
+
+        const newCard = window.App.createContactCard(
+          {
+            name: nameVal,
+            roleText: nickVal,
+            phone: phoneVal,
+            email: emailVal,
+          },
+          false,
+        );
+
+        contactsGrid.appendChild(newCard);
+        attachTilt(newCard);
+        updateCardAnimationDelays();
+        closeAddModal();
+        applyFilter();
       });
     });
   </script>
