@@ -4,6 +4,11 @@
 
     $inData = getRequestInfo();
 
+    // Validate required fields
+    if (!isset($inData["userId"]) || !isset($inData["id"])) {
+        returnWithError("Missing required fields");
+        return;
+    }
     // Payload variables
     $userId = $inData['userId'];
     $contactId = $inData['id'];
