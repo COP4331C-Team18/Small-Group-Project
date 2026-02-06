@@ -12,8 +12,8 @@
   }
 
   $userId = $inputData["userId"];
-  $startIdx = $inputData["startIdx"];   //  zero-based index
-  $count = $inputData["count"];    //  number of records to fetch
+  $startIdx = $inputData["startIdx"];
+  $count = $inputData["count"];
 
   
   // Connect to NEBULIST db
@@ -24,6 +24,7 @@
       return;
   }
 
+  // Prepare and execute SQL query
   $statement = $conn->prepare("SELECT Firstname, Lastname, Email, Phone FROM Contacts WHERE UserID = ? LIMIT ? OFFSET ?");
   $statement->bind_param("iii", $userId, $count, $startIdx);
   $statement->execute();
