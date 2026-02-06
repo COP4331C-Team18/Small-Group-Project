@@ -1,51 +1,241 @@
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nebulist | Contacts</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nebulist | Contacts</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap"
+    rel="stylesheet"
+  />
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/contacts.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
 
-    <!-- Core JS -->
-    <script src="../js/code.js" defer></script>
+  <!-- Core JS -->
+  <script src="../js/code.js" defer></script>
 
-    <script defer>
-        document.addEventListener('DOMContentLoaded', () => {
-            readCookie();
+  <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+      // uncomment the two following lines to enable login redirection
+      // readCookie();
 
-            if (userId <= 0) {
-                window.location.href = "/login.html";
-                return;
-            }
+      if (userId <= 0) {
+        // window.location.href = "/login.html";
+        return;
+      }
 
-            document.querySelector('.username-text').textContent =
-                firstName + " " + lastName;
-        });
-    </script>
-    
+      document.querySelector(".username-text").textContent =
+        firstName + " " + lastName;
+    });
+  </script>
 </head>
 
 <body>
-    <!-- Fixed Header -->
-    <header class="dashboard-header">
-        <h1 class="dashboard-title">NEBULIST</h1>
-        
-        <nav class="dashboard-nav">
-            <a href="./" class="nav-link">Home</a>
-            <a href="contacts.html" class="nav-link active">Contacts</a>
-            <a href="history.html" class="nav-link">History</a>
-            <a href="settings.html" class="nav-link">Settings</a>
-            <a href="about.html" class="nav-link">About Us</a>
-            <a href="#" onclick="doLogout()" class="nav-link logout">Logout</a>
-        </nav>
-    </header>
+  <!-- Fixed Header -->
+  <header class="dashboard-header">
+    <h1 class="dashboard-title">NEBULIST</h1>
 
-    <!-- Main Content -->
-    <main class="dashboard-main">
-       
-    </main>
+    <nav class="dashboard-nav">
+      <a href="./" class="nav-link">Home</a>
+      <a href="contacts.html" class="nav-link">Contacts</a>
+      <a href="history.html" class="nav-link">History</a>
+      <a href="settings.html" class="nav-link">Settings</a>
+      <a href="about.html" class="nav-link active">About Us</a>
+      <a href="#" onclick="doLogout()" class="nav-link logout">Logout</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <div class="index-container">
+    <div class="search-container">
+      <div class="search-wrapper">
+        <div class="search-glow"></div>
+        <span class="search-icon">⌕</span>
+        <input
+          type="text"
+          id="searchInput"
+          name="search"
+          placeholder="Search contacts by name, role, or planet..."
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          inputmode="search"
+        />
+      </div>
+    </div>
+
+    <div class="contacts-grid" id="contactsGrid">
+      <!-- Example cards are rendered by JS -->
+    </div>
+
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🛸</div>
+      <h3>No contacts found in this sector</h3>
+      <p>Try adjusting your search parameters</p>
+    </div>
+  </div>
+
+  <button class="fab" title="Add Contact" aria-label="Add contact"></button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Search functionality with smooth animations
+      const searchInput = document.getElementById("searchInput");
+      const contactsGrid = document.getElementById("contactsGrid");
+      const emptyState = document.getElementById("emptyState");
+
+      const exampleContacts = [
+        {
+          name: "Alex Chen",
+          roleText: "Title/Nickname",
+          phone: "(555) 010-1001",
+          email: "alex.chen@station.alpha",
+        },
+        {
+          name: "Sarah Kim",
+          roleText: "Title/Nickname",
+          phone: "(555) 010-1002",
+          email: "sarah.kim@nasa.gov",
+        },
+        {
+          name: "Marcus Johnson",
+          roleText: "Title/Nickname",
+          phone: "(555) 010-1003",
+          email: "m.johnson@exo.bio",
+        },
+        {
+          name: "Elena Rodriguez",
+          roleText: "Title/Nickname",
+          phone: "(555) 010-1004",
+          email: "elena.r@spaceforce.mil",
+        },
+        {
+          name: "Dr. Zara Patel",
+          roleText: "Title/Nickname",
+          phone: "(555) 010-1005",
+          email: "z.patel@med.space",
+        },
+        {
+          name: "James Wilson",
+          roleText: "Title/Nickname",
+          phone: "(555) 010-1006",
+          email: "j.wilson@nav.core",
+        },
+      ];
+
+      const cards =
+        window.App && window.App.renderContactCards
+          ? window.App.renderContactCards(contactsGrid, exampleContacts)
+          : contactsGrid.querySelectorAll(".contact-card");
+
+      contactsGrid.addEventListener("click", (e) => {
+        const deleteBtn = e.target.closest(".delete-contact");
+        if (!deleteBtn) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        const card = deleteBtn.closest(".contact-card");
+        if (!card) return;
+
+        card.remove();
+        searchInput.dispatchEvent(new Event("input"));
+      });
+
+      searchInput.addEventListener("input", (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          if (!card.isConnected) return;
+
+          const name = card.getAttribute("data-name").toLowerCase();
+          const role = card.getAttribute("data-role").toLowerCase();
+          const details = card.textContent.toLowerCase();
+
+          if (
+            name.includes(searchTerm) ||
+            role.includes(searchTerm) ||
+            details.includes(searchTerm)
+          ) {
+            card.classList.remove("hide");
+            visibleCount++;
+          } else {
+            card.classList.add("hide");
+          }
+        });
+
+        if (visibleCount === 0) {
+          emptyState.classList.add("show");
+        } else {
+          emptyState.classList.remove("show");
+        }
+      });
+
+      // 3D tilt effect on cards (throttled for performance)
+      cards.forEach((card) => {
+        let rect = null;
+        let rafId = 0;
+        let latestX = 0;
+        let latestY = 0;
+
+        const updateTransform = () => {
+          rafId = 0;
+          if (!rect) return;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = (latestY - centerY) / 50;
+          const rotateY = (centerX - latestX) / 50;
+
+          card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        };
+
+        card.addEventListener("mouseenter", () => {
+          rect = card.getBoundingClientRect();
+        });
+
+        card.addEventListener(
+          "mousemove",
+          (e) => {
+            if (!rect) rect = card.getBoundingClientRect();
+            latestX = e.clientX - rect.left;
+            latestY = e.clientY - rect.top;
+
+            if (!rafId) rafId = requestAnimationFrame(updateTransform);
+          },
+          { passive: true },
+        );
+
+        card.addEventListener("mouseleave", () => {
+          rect = null;
+          if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = 0;
+          }
+          card.style.transform = "translateY(0) rotateX(0) rotateY(0)";
+        });
+
+        window.addEventListener(
+          "resize",
+          () => {
+            if (rect) rect = card.getBoundingClientRect();
+          },
+          { passive: true },
+        );
+      });
+
+      // Random floating animation for cards
+      cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+      });
+    });
+  </script>
 </body>
