@@ -28,6 +28,7 @@
         <h2>Mission Access Portal</h2>
 
         <div class="card login-card">
+            
             <form onsubmit="doLogin(); return false;">
                 <input
                     type="text"
@@ -42,11 +43,11 @@
                     placeholder="Password"
                     required
                 />
+                
+                <div id="loginResult" class="login-result"></div>
 
                 <button type="submit">Log In</button>
             </form>
-
-            <div id="loginResult" class="login-result"></div>
 
             <div class="login-links">
                 <a href="/createaccount.html">Create Account</a>
