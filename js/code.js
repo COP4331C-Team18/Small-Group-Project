@@ -191,3 +191,95 @@ function searchColor()
 	}
 	
 }
+
+// UI helpers (safe to load on every page)
+window.App = window.App || {};
+
+window.App.createContactCard = function createContactCard(contact)
+{
+	const card = document.createElement("div");
+	card.className = "contact-card";
+	card.setAttribute("data-name", contact.name);
+	card.setAttribute("data-role", contact.roleText || "");
+
+	const glow = document.createElement("div");
+	glow.className = "card-glow";
+	card.appendChild(glow);
+
+	const delBtn = document.createElement("button");
+	delBtn.type = "button";
+	delBtn.className = "delete-contact";
+	delBtn.setAttribute("aria-label", "Delete contact");
+	delBtn.title = "Delete contact";
+	card.appendChild(delBtn);
+
+	const avatarContainer = document.createElement("div");
+	avatarContainer.className = "avatar-container";
+
+	const avatarRing = document.createElement("div");
+	avatarRing.className = "avatar-ring";
+	avatarContainer.appendChild(avatarRing);
+
+	const avatar = document.createElement("div");
+	avatar.className = "avatar";
+	avatar.setAttribute("style", "background: linear-gradient(135deg, #60a5fa20, #1b2735)");
+	avatar.textContent = (contact.name || "")
+		.trim()
+		.split(/\s+/)
+		.filter(Boolean)
+		.map(word => word[0].toUpperCase())
+		.join("");
+	avatarContainer.appendChild(avatar);
+
+	card.appendChild(avatarContainer);
+
+	const nameEl = document.createElement("h3");
+	nameEl.className = "contact-name";
+	nameEl.textContent = contact.name;
+	card.appendChild(nameEl);
+
+	const roleEl = document.createElement("p");
+	roleEl.className = "contact-role";
+	roleEl.textContent = contact.roleText;
+	card.appendChild(roleEl);
+
+	const details = document.createElement("div");
+	details.className = "contact-details";
+
+	const phoneItem = document.createElement("div");
+	phoneItem.className = "detail-item";
+	phoneItem.innerHTML = `<span class="detail-icon">☎</span><span>${contact.phone}</span>`;
+	details.appendChild(phoneItem);
+
+	const emailItem = document.createElement("div");
+	emailItem.className = "detail-item";
+	emailItem.innerHTML = `<span class="detail-icon">✉</span><span>${contact.email}</span>`;
+	details.appendChild(emailItem);
+
+	card.appendChild(details);
+
+	const actions = document.createElement("div");
+	actions.className = "card-actions";
+	actions.innerHTML =
+	'<button class="btn-action btn-primary">Message</button>' +
+	'<button class="btn-action btn-secondary">Profile</button>';
+	card.appendChild(actions);
+
+	return card;
+}
+
+window.App.renderContactCards = function renderContactCards(contactsGrid, contacts)
+{
+	if (!contactsGrid) return [];
+	contactsGrid.textContent = "";
+	(contacts || []).forEach((contact) => {
+		contactsGrid.appendChild(window.App.createContactCard(contact));
+	});
+	return contactsGrid.querySelectorAll(".contact-card");
+}
+
+// Backward compatibility for pages that call createContactCard directly
+if (typeof window.createContactCard !== "function")
+{
+	window.createContactCard = window.App.createContactCard;
+}
