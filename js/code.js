@@ -119,14 +119,38 @@ function doLogout()
 
 function doRegister()
 {
-    let firstName = document.getElementById("firstName").value;
-    let lastName  = document.getElementById("lastName").value;
-    let username  = document.getElementById("username").value;
+    let firstName = document.getElementById("firstName").value.trim();
+    let lastName  = document.getElementById("lastName").value.trim();
+    let username  = document.getElementById("username").value.trim();
     let password  = document.getElementById("password").value;
-    let email     = document.getElementById("email").value;
-    let phone     = document.getElementById("phone").value;
+    let confirm   = document.getElementById("confirmPassword").value;
+    let email     = document.getElementById("email").value.trim();
+    let phone     = document.getElementById("phone").value.trim();
 
-    document.getElementById("registerResult").innerHTML = "";
+    let result = document.getElementById("registerResult");
+    result.innerHTML = "";
+
+    /* ---------- Client-side validation ---------- */
+
+    if (!firstName || !lastName || !username || !email || !phone)
+    {
+        result.innerHTML = "All fields are required.";
+        return;
+    }
+
+    if (password.length < 6)
+    {
+        result.innerHTML = "Password must be at least 6 characters.";
+        return;
+    }
+
+    if (password !== confirm)
+    {
+        result.innerHTML = "Passwords do not match.";
+        return;
+    }
+
+    /* ---------- Payload (MATCHES DB CASE) ---------- */
 
     let tmp = {
         Firstname: firstName,
@@ -146,7 +170,7 @@ function doRegister()
 
     try
     {
-        xhr.onreadystatechange = function()
+        xhr.onreadystatechange = function ()
         {
             if (this.readyState === 4)
             {
@@ -154,12 +178,11 @@ function doRegister()
 
                 if (response.error && response.error.length > 0)
                 {
-                    document.getElementById("registerResult").innerHTML = response.error;
+                    result.innerHTML = response.error;
                 }
                 else
                 {
-                    document.getElementById("registerResult").innerHTML =
-                        "Registration successful! Redirecting to login...";
+                    result.innerHTML = "Registration successful! Redirecting…";
 
                     setTimeout(() => {
                         window.location.href = "login.html";
@@ -169,9 +192,9 @@ function doRegister()
         };
         xhr.send(jsonPayload);
     }
-    catch(err)
+    catch (err)
     {
-        document.getElementById("registerResult").innerHTML = err.message;
+        result.innerHTML = err.message;
     }
 }
 
