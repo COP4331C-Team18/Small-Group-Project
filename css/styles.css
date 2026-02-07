@@ -1,3 +1,40 @@
+/* Page Background */
+html {
+    height: auto;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    height: auto;
+    margin: 0;
+    font-family: "Ubuntu", sans-serif;
+    color: #ffffff;
+    background: radial-gradient(circle at top, #1b2735 0%, #090a0f 100%);
+    overflow: hidden;
+}
+
+/* Animated Star Field */
+body::before {
+    content: "";
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background: url("https://www.transparenttextures.com/patterns/stardust.png");
+    animation: drift 120s linear infinite;
+    opacity: 0.4;
+    z-index: 0;
+}
+
+@keyframes drift {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-50%, -50%);
+    }
+}
+
 /* Layout Container */
 .container {
     position: relative;
