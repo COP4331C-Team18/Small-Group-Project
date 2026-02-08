@@ -1,13 +1,6 @@
 // Base URL for API endpoints.
-// Derives from where this script is served so the app works from a subfolder
-// like /Small-Group-Project/ as well as from domain root.
-const urlBase = (() =>
-{
-  const scriptEl = document.currentScript || document.querySelector('script[src$="js/code.js"]');
-  const scriptUrl = new URL((scriptEl && scriptEl.src) ? scriptEl.src : window.location.href);
-  const basePath = scriptUrl.pathname.replace(/\/js\/code\.js$/, "");
-  return basePath + "/LAMPAPI";
-})();
+// Use the site root so production works without requiring a /Small-Group-Project prefix.
+const urlBase = window.location.origin + "/LAMPAPI";
 const extension = "php";
 
 let userId = 0;
@@ -169,7 +162,10 @@ function doRegister()
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
+    console.log(url, jsonPayload); // Debug log
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    console.log("Registering user:", tmp); // Debug log
 
     try
     {
@@ -177,11 +173,36 @@ function doRegister()
         {
             if (this.readyState === 4)
             {
-                let response = JSON.parse(xhr.responseText);
+              if (xhr.status !== 200)
+              {
+                console.log("Register failed:", xhr.status, xhr.responseText);
+                result.innerHTML = "Register failed (HTTP " + xhr.status + ").";
+                return;
+              }
+
+              if (!xhr.responseText)
+              {
+                console.log("Empty response from Register.");
+                result.innerHTML = "Server returned an empty response.";
+                return;
+              }
+
+            let response;
+            try
+            {
+              response = JSON.parse(xhr.responseText);
+            }
+            catch (parseErr)
+            {
+              console.log("Non-JSON response from Register:", xhr.status, xhr.responseText);
+              result.innerHTML = "Server returned an unexpected response.";
+              return;
+            }
 
                 if (response.error && response.error.length > 0)
                 {
-                    result.innerHTML = response.error;
+                  console.log(response, response.error); // Debug log
+                  result.innerHTML = response.error;
                 }
                 else
                 {
@@ -277,144 +298,289 @@ function searchColor()
 	
 }
 
-// UI helpers (safe to load on every page)
-window.App = window.App || {};
+// Contacts API helpers (safe to load on every page)
 
-window.App.createContactCard = function createContactCard(
-  contact = {},
-  isExampleCard = false,
-  name = "Unknown",
-  nickname = "Title/Nickname",
-  phone = "Unknown",
-  email = "Unknown",
-) {
-  const safeContact = contact && typeof contact === "object" ? contact : {};
-  const resolvedName = safeContact.name ?? name;
-  const resolvedNickname = safeContact.roleText ?? nickname;
-  const resolvedPhone = safeContact.phone ?? phone;
-  const resolvedEmail = safeContact.email ?? email;
+// Fetch contacts for a user from the backend.
+// Returns objects shaped for createContactCard: { id, name, phone, email, roleText }
+function getContacts(userIdToFetch, startIdx = 0, count = 100)
+{
+  return new Promise((resolve, reject) =>
+  {
+    if (!(typeof userIdToFetch === "number" && userIdToFetch > 0))
+    {
+      reject(new Error("Invalid userId"));
+      return;
+    }
 
-  // frontend card creation
-  const card = document.createElement("div");
-  card.className = "contact-card";
-  card.setAttribute("data-name", resolvedName);
-  card.setAttribute("data-role", resolvedNickname || "");
-  card.setAttribute("data-example", String(!!isExampleCard));
+    const tmp = { userId: userIdToFetch, startIdx: startIdx, count: count };
+    const jsonPayload = JSON.stringify(tmp);
+    const url = urlBase + "/GetContacts." + extension;
 
-  const glow = document.createElement("div");
-  glow.className = "card-glow";
-  card.appendChild(glow);
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    xhr.onreadystatechange = function ()
+    {
+      if (xhr.readyState !== 4) return;
+      if (xhr.status !== 200)
+      {
+        reject(new Error("GetContacts failed (HTTP " + xhr.status + ")"));
+        return;
+      }
 
-  const delBtn = document.createElement("button");
-  delBtn.type = "button";
-  delBtn.className = "delete-contact";
-  delBtn.setAttribute("aria-label", "Delete contact");
-  delBtn.title = "Delete contact";
-  card.appendChild(delBtn);
+      let jsonObject;
+      try
+      {
+        jsonObject = JSON.parse(xhr.responseText);
+      }
+      catch (e)
+      {
+        reject(new Error("GetContacts returned invalid JSON"));
+        return;
+      }
 
-  const avatarContainer = document.createElement("div");
-  avatarContainer.className = "avatar-container";
+      if (jsonObject.error && jsonObject.error.length > 0)
+      {
+        reject(new Error(jsonObject.error));
+        return;
+      }
 
-  const avatarRing = document.createElement("div");
-  avatarRing.className = "avatar-ring";
-  avatarContainer.appendChild(avatarRing);
+      const results = Array.isArray(jsonObject.results) ? jsonObject.results : [];
+      const contacts = results.map((row) =>
+      {
+        const id = Number(row.ID ?? row.id ?? 0) || 0;
+        const first = row.Firstname ?? row.firstname ?? "";
+        const last = row.Lastname ?? row.lastname ?? "";
+        return {
+          id: id,
+          name: String((first + " " + last).trim()),
+          roleText: String(row.Nickname ?? row.nickname ?? ""),
+          phone: String(row.Phone ?? row.phone ?? ""),
+          email: String(row.Email ?? row.email ?? ""),
+        };
+      });
 
-  const avatar = document.createElement("div");
-  avatar.className = "avatar";
-  avatar.setAttribute(
-    "style",
-    "background: linear-gradient(135deg, #60a5fa20, #1b2735)",
-  );
-  avatar.textContent = (resolvedName || "")
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((word) => word[0].toUpperCase())
-    .join("");
-  avatarContainer.appendChild(avatar);
+      resolve(contacts);
+    };
 
-  card.appendChild(avatarContainer);
+    xhr.send(jsonPayload);
+  });
+}
 
-  const nameEl = document.createElement("h3");
-  nameEl.className = "contact-name";
-  nameEl.textContent = resolvedName;
-  card.appendChild(nameEl);
+// Create a contact in the backend. Returns the JSON response (including inserted id).
+function addContact(params = {})
+{
+  return new Promise((resolve, reject) =>
+  {
+    const userIdToUse = Number(params.userId ?? userId) || 0;
+    const fullName = String(params.name ?? "").trim();
+    const nicknameToUse = String(params.nickname ?? "");
+    const phoneToUse = String(params.phone ?? "");
+    const emailToUse = String(params.email ?? "");
 
-  const roleEl = document.createElement("p");
-  roleEl.className = "contact-role";
-  roleEl.textContent = resolvedNickname;
-  card.appendChild(roleEl);
+    if (!(userIdToUse > 0))
+    {
+      reject(new Error("Invalid userId"));
+      return;
+    }
 
-  const details = document.createElement("div");
-  details.className = "contact-details";
+    if (!fullName)
+    {
+      reject(new Error("Name is required"));
+      return;
+    }
 
-  const phoneItem = document.createElement("div");
-  phoneItem.className = "detail-item";
-  phoneItem.innerHTML = `<span class="detail-icon">☎</span><span>${resolvedPhone}</span>`;
-  details.appendChild(phoneItem);
-
-  const emailItem = document.createElement("div");
-  emailItem.className = "detail-item";
-  emailItem.innerHTML = `<span class="detail-icon">✉</span><span>${resolvedEmail}</span>`;
-  details.appendChild(emailItem);
-
-  card.appendChild(details);
-
-  const actions = document.createElement("div");
-  actions.className = "card-actions";
-  actions.innerHTML =
-    '<button class="btn-action btn-primary">Message</button>' +
-    '<button class="btn-action btn-secondary">Profile</button>';
-  card.appendChild(actions);
-
-  // backend contact creation (only if not an example card and we have a valid userId)
-  if (!isExampleCard && typeof userId === "number" && userId > 0) {
-    const nameParts = String(resolvedName || "")
-      .trim()
-      .split(/\s+/)
-      .filter(Boolean);
+    const nameParts = fullName.split(/\s+/).filter(Boolean);
     const first = nameParts.length > 0 ? nameParts[0] : "";
     const last = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
 
     const tmp = {
       Firstname: first,
       Lastname: last,
-      Email: String(resolvedEmail || ""),
-      Phone: String(resolvedPhone || ""),
-      UserID: userId,
+      Nickname: nicknameToUse,
+      Email: emailToUse,
+      Phone: phoneToUse,
+      UserID: userIdToUse,
     };
+
     const jsonPayload = JSON.stringify(tmp);
     const url = urlBase + "/AddContact." + extension;
 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    xhr.onreadystatechange = function () {
-      if (this.readyState !== 4) return;
-      if (this.status !== 200) {
-        console.error(
-          "AddContact failed (HTTP)",
-          this.status,
-          this.responseText,
-        );
+    xhr.onreadystatechange = function ()
+    {
+      if (xhr.readyState !== 4) return;
+      if (xhr.status !== 200)
+      {
+        reject(new Error("AddContact failed (HTTP " + xhr.status + ")"));
         return;
       }
-      try {
-        const jsonObject = JSON.parse(xhr.responseText);
-        if (jsonObject.error && jsonObject.error.length > 0) {
-          console.error("AddContact failed (API)", jsonObject.error);
-        }
-      } catch (e) {
-        console.error("AddContact returned invalid JSON", e);
+
+      let jsonObject;
+      try
+      {
+        jsonObject = JSON.parse(xhr.responseText);
       }
+      catch (e)
+      {
+        reject(new Error("AddContact returned invalid JSON"));
+        return;
+      }
+
+      if (jsonObject.error && jsonObject.error.length > 0)
+      {
+        reject(new Error(jsonObject.error));
+        return;
+      }
+
+      resolve(jsonObject);
     };
+
     xhr.send(jsonPayload);
-  }
+  });
+}
 
-  return card;
-};
+// Edit an existing contact (requires contactId).
+function editContact(params = {})
+{
+  return new Promise((resolve, reject) =>
+  {
+    const userIdToUse = Number(params.userId ?? userId) || 0;
+    const contactId = Number(params.contactId) || 0;
+    const fullName = String(params.name ?? "").trim();
+    const nicknameToUse = String(params.nickname ?? "");
+    const phoneToUse = String(params.phone ?? "");
+    const emailToUse = String(params.email ?? "");
 
-// Backward compatibility for pages that call createContactCard directly
-if (typeof window.createContactCard !== "function") {
-  window.createContactCard = window.App.createContactCard;
+    if (!(userIdToUse > 0))
+    {
+      reject(new Error("Invalid userId"));
+      return;
+    }
+
+    if (!(contactId > 0))
+    {
+      reject(new Error("Invalid contactId"));
+      return;
+    }
+
+    if (!fullName)
+    {
+      reject(new Error("Name is required"));
+      return;
+    }
+
+    const nameParts = fullName.split(/\s+/).filter(Boolean);
+    const first = nameParts.length > 0 ? nameParts[0] : "";
+    const last = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
+
+    const tmp = {
+      userId: userIdToUse,
+      contactId: contactId,
+      firstname: first,
+      lastname: last,
+      nickname: nicknameToUse,
+      phone: phoneToUse,
+      email: emailToUse,
+    };
+
+    const jsonPayload = JSON.stringify(tmp);
+    const url = urlBase + "/EditContact." + extension;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    xhr.onreadystatechange = function ()
+    {
+      if (xhr.readyState !== 4) return;
+      if (xhr.status !== 200)
+      {
+        reject(new Error("EditContact failed (HTTP " + xhr.status + ")"));
+        return;
+      }
+
+      let jsonObject;
+      try
+      {
+        jsonObject = JSON.parse(xhr.responseText);
+      }
+      catch (e)
+      {
+        reject(new Error("EditContact returned invalid JSON"));
+        return;
+      }
+
+      if (jsonObject.error && jsonObject.error.length > 0)
+      {
+        reject(new Error(jsonObject.error));
+        return;
+      }
+
+      resolve(jsonObject);
+    };
+
+    xhr.send(jsonPayload);
+  });
+}
+
+// Delete a contact by id for the logged-in user.
+function deleteContact(params = {})
+{
+  return new Promise((resolve, reject) =>
+  {
+    const userIdToUse = Number(params.userId ?? userId) || 0;
+    const contactId = Number(params.contactId ?? params.id) || 0;
+
+    if (!(userIdToUse > 0))
+    {
+      reject(new Error("Invalid userId"));
+      return;
+    }
+
+    if (!(contactId > 0))
+    {
+      reject(new Error("Invalid contactId"));
+      return;
+    }
+
+    const tmp = { userId: userIdToUse, id: contactId };
+    const jsonPayload = JSON.stringify(tmp);
+    const url = urlBase + "/DeleteContact." + extension;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    xhr.onreadystatechange = function ()
+    {
+      if (xhr.readyState !== 4) return;
+      if (xhr.status !== 200)
+      {
+        reject(new Error("DeleteContact failed (HTTP " + xhr.status + ")"));
+        return;
+      }
+
+      let jsonObject;
+      try
+      {
+        jsonObject = JSON.parse(xhr.responseText);
+      }
+      catch (e)
+      {
+        reject(new Error("DeleteContact returned invalid JSON"));
+        return;
+      }
+
+      if (jsonObject.error && jsonObject.error.length > 0)
+      {
+        reject(new Error(jsonObject.error));
+        return;
+      }
+
+      resolve(jsonObject);
+    };
+
+    xhr.send(jsonPayload);
+  });
 }

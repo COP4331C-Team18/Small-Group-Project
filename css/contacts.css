@@ -10,7 +10,7 @@ html {
   min-height: 100%;
 }
 
-body {
+body.contacts-page {
   min-height: 100vh;
   height: auto;
   margin: 0;
@@ -20,6 +20,8 @@ body {
   /* The dashboard header is fixed, so reserve its height here.
              Using padding avoids top-margin collapsing issues. */
   padding-top: 175px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Animated Star Field */
@@ -43,20 +45,6 @@ body::before {
   to {
     transform: translate(-50%, -50%);
   }
-}
-
-/* Scrollbar styling (matches site theme) */
-:root {
-  --scrollbar-track: rgba(15, 23, 42, 0.55);
-  --scrollbar-thumb: rgba(139, 233, 253, 0.35);
-  --scrollbar-thumb-hover: rgba(139, 233, 253, 0.6);
-  --scrollbar-border: rgba(139, 233, 253, 0.25);
-}
-
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 /* Main Container */
@@ -194,7 +182,6 @@ h1 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
-  perspective: 1000px;
 }
 
 /* Contact Card */
@@ -254,7 +241,6 @@ h1 {
 }
 
 .contact-card:hover {
-  transform: translateY(-10px) rotateX(5deg);
   border-color: rgba(139, 233, 253, 0.6);
   box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.4),
@@ -601,11 +587,15 @@ h1 {
   pointer-events: none;
 }
 
+/* When a search eliminates any cards, briefly hide all then re-show matches */
+.contact-card.refilter {
+  animation: fadeInUp 0.45s ease-out both;
+}
+
 @keyframes fadeOut {
   to {
     opacity: 0;
     transform: scale(0.8);
-    margin-bottom: -100px;
   }
 }
 
@@ -650,7 +640,19 @@ h1 {
   gap: 12px;
 }
 
+#editContactForm {
+  display: grid;
+  gap: 12px;
+}
+
 #addContactForm label {
+  display: grid;
+  gap: 6px;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+#editContactForm label {
   display: grid;
   gap: 6px;
   color: #cbd5e1;
@@ -667,7 +669,22 @@ h1 {
   outline: none;
 }
 
+#editContactForm input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(139, 233, 253, 0.25);
+  background: rgba(2, 6, 23, 0.35);
+  color: #e5e7eb;
+  outline: none;
+}
+
 #addContactForm input:focus {
+  border-color: rgba(139, 233, 253, 0.75);
+  box-shadow: 0 0 0 3px rgba(139, 233, 253, 0.15);
+}
+
+#editContactForm input:focus {
   border-color: rgba(139, 233, 253, 0.75);
   box-shadow: 0 0 0 3px rgba(139, 233, 253, 0.15);
 }

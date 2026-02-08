@@ -18,34 +18,20 @@
 
   <!-- Core JS -->
   <script src="../js/code.js" defer></script>
-
-  <script defer>
-    document.addEventListener("DOMContentLoaded", () => {
-      // uncomment the two following lines to enable login redirection
-      // readCookie();
-
-      if (userId < 1) {
-        // window.location.replace("/login.html");
-        return;
-      }
-
-      document.querySelector(".username-text").textContent =
-        firstName + " " + lastName;
-    });
-  </script>
+  <script src="../js/contacts.js" defer></script>
 </head>
 
-<body>
+<body class="contacts-page">
   <!-- Fixed Header -->
   <header class="dashboard-header">
     <h1 class="dashboard-title">NEBULIST</h1>
 
     <nav class="dashboard-nav">
       <a href="./" class="nav-link">Home</a>
-      <a href="contacts.html" class="nav-link">Contacts</a>
+      <a href="contacts.html" class="nav-link active">Contacts</a>
       <a href="history.html" class="nav-link">History</a>
       <a href="settings.html" class="nav-link">Settings</a>
-      <a href="about.html" class="nav-link active">About Us</a>
+      <a href="about.html" class="nav-link">About Us</a>
       <a href="#" onclick="doLogout()" class="nav-link logout">Logout</a>
     </nav>
   </header>
@@ -84,53 +70,27 @@
   <button class="fab" title="Add Contact" aria-label="Add contact"></button>
 
   <div class="modal-backdrop" id="addContactModal" aria-hidden="true">
-    <div
-      class="modal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="addContactTitle"
-    >
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="addContactTitle">
       <h2 id="addContactTitle">Add Contact</h2>
       <form id="addContactForm" autocomplete="off" novalidate>
         <label>
           Name
-          <input
-            id="addName"
-            name="name"
-            type="text"
-            placeholder="First Last"
-            required
-          />
+          <input id="addName" name="name" type="text" placeholder="First Last" required/>
         </label>
 
         <label>
           Nickname / Title
-          <input
-            id="addNickname"
-            name="nickname"
-            type="text"
-            placeholder="Title/Nickname"
-          />
+          <input id="addNickname" name="nickname" type="text" placeholder="Title/Nickname"/>
         </label>
 
         <label>
           Phone
-          <input
-            id="addPhone"
-            name="phone"
-            type="tel"
-            placeholder="(555) 010-1001"
-          />
+          <input id="addPhone" name="phone" type="tel" placeholder="(555) 010-1001"/>
         </label>
 
         <label>
           Email
-          <input
-            id="addEmail"
-            name="email"
-            type="email"
-            placeholder="name@example.com"
-          />
+          <input id="addEmail" name="email" type="email" placeholder="name@example.com"/>
         </label>
 
         <p class="modal-error" id="addContactError" aria-live="polite"></p>
@@ -147,239 +107,41 @@
     </div>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Populate globals if a cookie exists (no redirect here)
-      if (typeof readCookie === "function") readCookie();
+  <div class="modal-backdrop" id="editContactModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editContactTitle">
+      <h2 id="editContactTitle">Edit Contact</h2>
+      <form id="editContactForm" autocomplete="off" novalidate>
+        <label>
+          Name
+          <input id="editName" name="name" type="text" placeholder="First Last" required/>
+        </label>
 
-      // Search functionality with smooth animations
-      const searchInput = document.getElementById("searchInput");
-      const contactsGrid = document.getElementById("contactsGrid");
-      const emptyState = document.getElementById("emptyState");
+        <label>
+          Nickname / Title
+          <input id="editNickname" name="nickname" type="text" placeholder="Title/Nickname"/>
+        </label>
 
-      const fabBtn = document.querySelector(".fab");
-      const addModal = document.getElementById("addContactModal");
-      const addForm = document.getElementById("addContactForm");
-      const addCancel = document.getElementById("addCancel");
-      const addError = document.getElementById("addContactError");
-      const addName = document.getElementById("addName");
-      const addNickname = document.getElementById("addNickname");
-      const addPhone = document.getElementById("addPhone");
-      const addEmail = document.getElementById("addEmail");
+        <label>
+          Phone
+          <input id="editPhone" name="phone" type="tel" placeholder="(555) 010-1001"/>
+        </label>
 
-      const getCards = () => contactsGrid.querySelectorAll(".contact-card");
+        <label>
+          Email
+          <input id="editEmail" name="email" type="email" placeholder="name@example.com"/>
+        </label>
 
-      const attachTilt = (card) => {
-        if (!card) return;
+        <p class="modal-error" id="editContactError" aria-live="polite"></p>
 
-        let rect = null;
-        let rafId = 0;
-        let latestX = 0;
-        let latestY = 0;
-
-        const updateTransform = () => {
-          rafId = 0;
-          if (!rect) return;
-
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-
-          const rotateX = (latestY - centerY) / 50;
-          const rotateY = (centerX - latestX) / 50;
-
-          card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        };
-
-        card.addEventListener("mouseenter", () => {
-          rect = card.getBoundingClientRect();
-        });
-
-        card.addEventListener(
-          "mousemove",
-          (e) => {
-            if (!rect) rect = card.getBoundingClientRect();
-            latestX = e.clientX - rect.left;
-            latestY = e.clientY - rect.top;
-
-            if (!rafId) rafId = requestAnimationFrame(updateTransform);
-          },
-          { passive: true },
-        );
-
-        card.addEventListener("mouseleave", () => {
-          rect = null;
-          if (rafId) {
-            cancelAnimationFrame(rafId);
-            rafId = 0;
-          }
-          card.style.transform = "translateY(0) rotateX(0) rotateY(0)";
-        });
-
-        window.addEventListener(
-          "resize",
-          () => {
-            if (rect) rect = card.getBoundingClientRect();
-          },
-          { passive: true },
-        );
-      };
-
-      const updateCardAnimationDelays = () => {
-        getCards().forEach((card, index) => {
-          card.style.animationDelay = `${index * 0.1}s`;
-        });
-      };
-
-      const applyFilter = () => {
-        const searchTerm = (searchInput.value || "").toLowerCase();
-        let visibleCount = 0;
-
-        getCards().forEach((card) => {
-          if (!card.isConnected) return;
-
-          const name = (card.getAttribute("data-name") || "").toLowerCase();
-          const role = (card.getAttribute("data-role") || "").toLowerCase();
-          const details = (card.textContent || "").toLowerCase();
-
-          if (
-            name.includes(searchTerm) ||
-            role.includes(searchTerm) ||
-            details.includes(searchTerm)
-          ) {
-            card.classList.remove("hide");
-            visibleCount++;
-          } else {
-            card.classList.add("hide");
-          }
-        });
-
-        emptyState.classList.toggle("show", visibleCount === 0);
-      };
-
-      const openAddModal = () => {
-        addError.textContent = "";
-        addModal.classList.add("show");
-        addModal.setAttribute("aria-hidden", "false");
-        requestAnimationFrame(() => addName.focus());
-      };
-
-      const closeAddModal = () => {
-        addModal.classList.remove("show");
-        addModal.setAttribute("aria-hidden", "true");
-        addError.textContent = "";
-        addForm.reset();
-      };
-
-      // Example contact data - replace with API data in production
-      const exampleContacts = [
-        {
-          name: "Alex Chen",
-          phone: "(555) 010-1001",
-          email: "alex.chen@station.alpha",
-        },
-        {
-          name: "Sarah Kim",
-          phone: "(555) 010-1002",
-          email: "sarah.kim@nasa.gov",
-        },
-        {
-          name: "Marcus Johnson",
-          phone: "(555) 010-1003",
-          email: "m.johnson@exo.bio",
-        },
-        {
-          name: "Elena Rodriguez",
-          phone: "(555) 010-1004",
-          email: "elena.r@spaceforce.mil",
-        },
-        {
-          name: "Dr. Zara Patel",
-          phone: "(555) 010-1005",
-          email: "z.patel@med.space",
-        },
-        {
-          name: "James Wilson",
-          phone: "(555) 010-1006",
-          email: "j.wilson@nav.core",
-        },
-      ];
-
-      // render example cards
-      exampleContacts.forEach((contact) =>
-        contactsGrid.appendChild(window.App.createContactCard(contact, true)),
-      );
-      getCards().forEach(attachTilt);
-      updateCardAnimationDelays();
-      applyFilter();
-
-      // delete contact
-      contactsGrid.addEventListener("click", (e) => {
-        const deleteBtn = e.target.closest(".delete-contact");
-        if (!deleteBtn) return;
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        const card = deleteBtn.closest(".contact-card");
-        if (!card) return;
-
-        card.remove();
-        applyFilter();
-      });
-
-      // search filter with animation
-      searchInput.addEventListener("input", applyFilter);
-
-      fabBtn.addEventListener("click", () => {
-        openAddModal();
-      });
-
-      addCancel.addEventListener("click", closeAddModal);
-      addModal.addEventListener("click", (e) => {
-        if (e.target === addModal) closeAddModal();
-      });
-      window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && addModal.classList.contains("show")) {
-          closeAddModal();
-        }
-      });
-
-      addForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        addError.textContent = "";
-
-        const nameVal = (addName.value || "").trim();
-        const nickVal = (addNickname.value || "").trim();
-        const phoneVal = (addPhone.value || "").trim();
-        const emailVal = (addEmail.value || "").trim();
-
-        if (!nameVal) {
-          addError.textContent = "Name is required.";
-          addName.focus();
-          return;
-        }
-
-        if (!(typeof userId === "number" && userId > 0)) {
-          addError.textContent = "Please log in to save contacts.";
-          return;
-        }
-
-        const newCard = window.App.createContactCard(
-          {
-            name: nameVal,
-            roleText: nickVal,
-            phone: phoneVal,
-            email: emailVal,
-          },
-          false,
-        );
-
-        contactsGrid.appendChild(newCard);
-        attachTilt(newCard);
-        updateCardAnimationDelays();
-        closeAddModal();
-        applyFilter();
-      });
-    });
-  </script>
+        <div class="modal-actions">
+          <button type="button" class="btn-action btn-secondary" id="editCancel">
+            Cancel
+          </button>
+          <button type="submit" class="btn-action btn-primary" id="editSave">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>

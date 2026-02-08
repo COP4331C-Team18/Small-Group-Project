@@ -5,12 +5,6 @@
 
     $inData = getRequestInfo();
 
-    // Validate required fields
-    if (!isset($inData["Firstname"]) || !isset($inData["Lastname"]) || !isset($inData["Username"]) || !isset($inData["Password"]) || !isset($inData["Email"]) || !isset($inData["Phone"])) {
-      returnWithError("Missing required fields");
-      return;
-    }
-
     $firstName = $inData['Firstname'];
     $lastName = $inData['Lastname'];
     $username = $inData['Username'];
