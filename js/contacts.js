@@ -130,11 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const safeContact = contact && typeof contact === "object" ? contact : {};
     const resolvedId = Number(safeContact.id ?? safeContact.ID ?? 0) || 0;
     const resolvedName = safeContact.name ?? name;
-    const resolvedNickname =
-      safeContact.nickname ??
-      safeContact.roleText ??
-      nickname ??
-      "";
+    const resolvedNickname = safeContact.roleText ?? nickname;
 
     const resolvedPhone = safeContact.phone ?? phone;
     const resolvedEmail = safeContact.email ?? email;
