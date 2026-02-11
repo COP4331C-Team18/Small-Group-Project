@@ -102,7 +102,6 @@
   backdrop-filter: blur(5px);
   box-shadow: 0 0 10px rgba(139, 233, 253, 0.5);
   transition: all 0.3s ease, opacity 0s 0.3s;
-  animation: blink 2s ease-in-out infinite;
   pointer-events: none;
   opacity: 0;
 }
@@ -136,38 +135,20 @@
 .satellite-1 {
   animation: orbit1 25s infinite linear;
 }
-.satellite-1 .satellite-text {
-  animation: blink 2s ease-in-out infinite;
-}
 .satellite-2 {
   animation: orbit2 30s infinite linear;
-}
-.satellite-2 .satellite-text {
-  animation: blink 2s ease-in-out infinite;
 }
 .satellite-3 {
   animation: orbit3 35s infinite linear;
 }
-.satellite-3 .satellite-text {
-  animation: blink 2s ease-in-out infinite;
-}
 .satellite-4 {
   animation: orbit4 28s infinite linear;
-}
-.satellite-4 .satellite-text {
-  animation: blink 2s ease-in-out infinite;
 }
 .satellite-5 {
   animation: orbit5 32s infinite linear;
 }
-.satellite-5 .satellite-text {
-  animation: blink 2s ease-in-out infinite;
-}
 .satellite-6 {
   animation: orbit6 40s infinite linear;
-}
-.satellite-6 .satellite-text {
-  animation: blink 2s ease-in-out infinite;
 }
 /* Orbital animations with larger radius */
 @keyframes orbit1 {

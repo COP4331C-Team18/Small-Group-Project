@@ -106,10 +106,8 @@ h1 {
 
 .search-wrapper:focus-within {
   border-color: #8be9fd;
-  box-shadow:
-    0 0 30px rgba(139, 233, 253, 0.3),
-    inset 0 0 20px rgba(139, 233, 253, 0.1);
-  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(139, 233, 253, 0.15);
+  transform: translateY(-1px);
 }
 
 .search-icon {
@@ -124,8 +122,8 @@ h1 {
 }
 
 .search-wrapper:focus-within .search-icon {
-  transform: translateY(-50%) scale(1.2);
-  filter: drop-shadow(0 0 8px rgba(139, 233, 253, 0.8));
+  transform: translateY(-50%);
+  filter: none;
 }
 
 #searchInput {
@@ -150,31 +148,7 @@ h1 {
 }
 
 .search-glow {
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  border-radius: 50px;
-  background: linear-gradient(45deg, #8be9fd, #a78bfa, #8be9fd);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  filter: blur(10px);
-}
-
-.search-wrapper:focus-within .search-glow {
-  opacity: 0.5;
-  animation: rotate 3s linear infinite;
-}
-
-@keyframes rotate {
-  0% {
-    filter: blur(10px) hue-rotate(0deg);
-  }
-  100% {
-    filter: blur(10px) hue-rotate(360deg);
-  }
+  display: none;
 }
 
 /* Contacts Grid */
@@ -198,7 +172,7 @@ h1 {
   backface-visibility: hidden;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   animation: fadeInUp 0.6s ease-out backwards;
-  cursor: pointer;
+  cursor: default;
 }
 
 .contact-card:nth-child(1) {
@@ -221,60 +195,16 @@ h1 {
 }
 
 .contact-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(139, 233, 253, 0.1),
-    transparent
-  );
-  transition: left 0.7s;
-}
-
-.contact-card:hover::before {
-  left: 100%;
+  display: none;
 }
 
 .contact-card:hover {
-  border-color: rgba(139, 233, 253, 0.6);
-  box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.4),
-    0 0 40px rgba(139, 233, 253, 0.2),
-    inset 0 0 20px rgba(139, 233, 253, 0.05);
+  border-color: rgba(139, 233, 253, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .card-glow {
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, #8be9fd, #a78bfa, #8be9fd);
-  border-radius: 20px;
-  opacity: 0;
-  z-index: -1;
-  filter: blur(15px);
-  transition: opacity 0.4s ease;
-}
-
-.contact-card:hover .card-glow {
-  opacity: 0.4;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.4;
-  }
-  50% {
-    opacity: 0.6;
-  }
+  display: none;
 }
 
 /* Avatar Section */
@@ -305,33 +235,12 @@ h1 {
 
 .contact-card:hover .avatar {
   border-color: #8be9fd;
-  box-shadow: 0 0 20px rgba(139, 233, 253, 0.5);
-  transform: scale(1.1);
+  box-shadow: 0 0 8px rgba(139, 233, 253, 0.3);
+  transform: scale(1.05);
 }
 
 .avatar-ring {
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  border-top-color: #8be9fd;
-  border-right-color: #a78bfa;
-  animation: spin 4s linear infinite;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.contact-card:hover .avatar-ring {
-  opacity: 1;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  display: none;
 }
 
 /* Contact Info */
@@ -385,14 +294,9 @@ h1 {
   display: flex;
   gap: 10px;
   margin-top: 20px;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.4s ease;
-}
-
-.contact-card:hover .card-actions {
   opacity: 1;
   transform: translateY(0);
+  transition: all 0.4s ease;
 }
 
 .btn-action {
