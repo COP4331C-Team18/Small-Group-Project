@@ -117,6 +117,81 @@ function doLogout()
     window.location.replace("/login.html");
 }
 
+function doRegister()
+{
+    let firstName = document.getElementById("firstName").value.trim();
+    let lastName  = document.getElementById("lastName").value.trim();
+    let username  = document.getElementById("username").value.trim();
+    let password  = document.getElementById("password").value;
+    let confirm   = document.getElementById("confirmPassword").value;
+    let email     = document.getElementById("email").value.trim();
+
+    let result = document.getElementById("registerResult");
+    result.innerHTML = "";
+
+    if (!firstName || !lastName || !username || !email)
+    {
+        result.innerHTML = "All fields are required.";
+        return;
+    }
+
+    if (password.length < 6)
+    {
+        result.innerHTML = "Password must be at least 6 characters.";
+        return;
+    }
+
+    if (password !== confirm)
+    {
+        result.innerHTML = "Passwords do not match.";
+        return;
+    }
+
+    let tmp = {
+        Firstname: firstName,
+        Lastname: lastName,
+        Username: username,
+        Password: password,
+        Email: email,
+    };
+
+    let jsonPayload = JSON.stringify(tmp);
+    let url = urlBase + '/Register.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try
+    {
+        xhr.onreadystatechange = function ()
+        {
+            if (this.readyState === 4)
+            {
+                let response = JSON.parse(xhr.responseText);
+
+                if (response.error && response.error.length > 0)
+                {
+                    result.innerHTML = response.error;
+                }
+                else
+                {
+                    result.innerHTML = "Registration successful! Redirecting…";
+
+                    setTimeout(() => {
+                        window.location.href = "login.html";
+                    }, 1500);
+                }
+            }
+        };
+        xhr.send(jsonPayload);
+    }
+    catch (err)
+    {
+        result.innerHTML = err.message;
+    }
+}
+
 function addColor()
 {
 	let newColor = document.getElementById("colorText").value;
