@@ -24,9 +24,21 @@
       return;
   }
 
-  // Prepare and execute SQL query
-  $statement = $conn->prepare("SELECT Firstname, Lastname, Email, Phone FROM Contacts WHERE UserID = ? LIMIT ? OFFSET ?");
-  $statement->bind_param("iii", $userId, $count, $startIdx);
+    // Prepare and execute SQL query
+      $statement = $conn->prepare("SELECT ID, Firstname, Lastname, Nickname, Email, Phone FROM Contacts WHERE UserID = ? LIMIT ? OFFSET ?");
+    if (!$statement)
+    {
+      // Backward compatibility: production may not have the Nickname column yet.
+        $statement = $conn->prepare("SELECT ID, Firstname, Lastname, Email, Phone FROM Contacts WHERE UserID = ? LIMIT ? OFFSET ?");
+      if (!$statement)
+      {
+        returnWithError($conn->error);
+        $conn->close();
+        return;
+      }
+    }
+
+    $statement->bind_param("iii", $userId, $count, $startIdx);
   $statement->execute();
   $result = $statement->get_result();
   
