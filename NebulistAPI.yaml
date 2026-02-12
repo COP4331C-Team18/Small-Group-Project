@@ -1,0 +1,492 @@
+openapi: 3.0.0
+
+info:
+  title: Nebulist API
+  version: 1.0.0
+  description: >
+    Nebulist is a contact manager application. This API allows users to
+    register, log in, and manage their personal contact list. All endpoints
+    return JSON responses with a consistent structure.
+
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/none-0d2-c70/NebulistAPI/1.0.0
+  - url: https://your-domain-or-mock-url.com
+    description: Nebulist API Server
+
+paths:
+
+  /Login.php:
+    post:
+      summary: User login
+      description: >
+        Authenticates a user using a username and password. Returns the user's ID,
+        firstname, and lastname if the credentials are valid. All responses return
+        HTTP 200; errors are indicated by a non-empty "error" field.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - login
+                - password
+              properties:
+                login:
+                  type: string
+                  example: "jdoe"
+                password:
+                  type: string
+                  example: "mypassword123"
+      responses:
+        '200':
+          description: Successful login or error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 12
+                  firstName:
+                    type: string
+                    example: "John"
+                  lastName:
+                    type: string
+                    example: "Doe"
+                  error:
+                    type: string
+                    example: ""
+
+
+  /Register.php:
+    post:
+      summary: Register a new user
+      description: >
+        Creates a new user account with firstname, lastname, username, password,
+        and email. All responses return HTTP 200; errors are indicated by
+        a non-empty "error" field. Duplicate usernames or emails will
+        return a database error message.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Firstname
+                - Lastname
+                - Username
+                - Password
+                - Email
+              properties:
+                Firstname:
+                  type: string
+                  example: "Alice"
+                Lastname:
+                  type: string
+                  example: "Smith"
+                Username:
+                  type: string
+                  example: "asmith"
+                Password:
+                  type: string
+                  example: "mypassword123"
+                Email:
+                  type: string
+                  example: "alice@example.com"
+      responses:
+        '200':
+          description: Successful registration or error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Registered successfully"
+                  error:
+                    type: string
+                    example: ""
+
+
+  /AddContact.php:
+    post:
+      summary: Add a new contact
+      description: >
+        Creates a new contact for the specified user. All responses return HTTP 200;
+        errors are indicated by a non-empty "error" field. Duplicate email+phone
+        combinations for the same user will return an error.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Firstname
+                - Lastname
+                - Email
+                - Phone
+                - UserID
+              properties:
+                Firstname:
+                  type: string
+                  example: "John"
+                Lastname:
+                  type: string
+                  example: "Doe"
+                Nickname:
+                  type: string
+                  example: "Johnny"
+                  description: Optional nickname for the contact
+                Email:
+                  type: string
+                  example: "john@example.com"
+                Phone:
+                  type: string
+                  example: "555-1234"
+                UserID:
+                  type: integer
+                  example: 1
+      responses:
+        '200':
+          description: Successful creation or error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Registered successfully"
+                  id:
+                    type: integer
+                    example: 42
+                  nicknameSupported:
+                    type: boolean
+                    example: true
+                  error:
+                    type: string
+                    example: ""
+
+
+
+  /EditContact.php:
+    post:
+      summary: Edit an existing contact
+      description: >
+        Updates a contact's firstname, lastname, phone, email, and optionally nickname
+        for the given user. All responses return HTTP 200; errors are indicated by a
+        non-empty "error" field. Duplicate email+phone combinations for the same user
+        will return an error.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - contactId
+                - firstname
+                - lastname
+                - phone
+                - email
+              properties:
+                userId:
+                  type: integer
+                  example: 1
+                contactId:
+                  type: integer
+                  example: 42
+                firstname:
+                  type: string
+                  example: "John"
+                lastname:
+                  type: string
+                  example: "Doe"
+                nickname:
+                  type: string
+                  example: "Johnny"
+                  description: Optional nickname for the contact
+                phone:
+                  type: string
+                  example: "555-1234"
+                email:
+                  type: string
+                  example: "john@example.com"
+      responses:
+        '200':
+          description: Successful update or error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Contact updated successfully"
+                  nicknameSupported:
+                    type: boolean
+                    nullable: true
+                    example: true
+                  error:
+                    type: string
+                    example: ""
+
+
+  /DeleteContact.php:
+    post:
+      summary: Delete a contact
+      description: >
+        Deletes a contact belonging to the specified user. A contact is only removed
+        if both the contact ID and user ID match. All responses return HTTP 200;
+        errors are indicated by a non-empty "error" field.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - id
+              properties:
+                userId:
+                  type: integer
+                  example: 1
+                id:
+                  type: integer
+                  example: 42
+      responses:
+        '200':
+          description: Successful deletion or error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Contact removed successfully"
+                  error:
+                    type: string
+                    example: ""
+
+
+
+  /EditUser.php:
+    post:
+      summary: Edit an existing user's account information
+      description: >
+        Updates a user's firstname, lastname, username, password, email, and phone.
+        All responses return HTTP 200; errors are indicated by a non-empty "error" field.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - firstname
+                - lastname
+                - username
+                - password
+                - email
+                - phone
+              properties:
+                id:
+                  type: integer
+                  example: 12
+                firstname:
+                  type: string
+                  example: "Alice"
+                lastname:
+                  type: string
+                  example: "Smith"
+                username:
+                  type: string
+                  example: "asmith"
+                password:
+                  type: string
+                  example: "newpassword123"
+                email:
+                  type: string
+                  example: "alice@example.com"
+                phone:
+                  type: string
+                  example: "555-9876"
+      responses:
+        '200':
+          description: Successful update or error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User Information updated successfully"
+                  error:
+                    type: string
+                    example: ""
+
+
+
+  /DeleteUser.php:
+    post:
+      summary: Delete a user
+      description: >
+        Deletes a user account based on the provided user ID. A user is only removed
+        if the ID exists in the database. All responses return HTTP 200; errors are
+        indicated by a non-empty "error" field.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - ID
+              properties:
+                ID:
+                  type: integer
+                  example: 12
+      responses:
+        '200':
+          description: Successful deletion or error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User deleted successfully"
+                  error:
+                    type: string
+                    example: ""
+
+
+
+
+  /SearchContacts.php:
+    post:
+      summary: Search for contacts by name
+      description: >
+        Returns contacts that match a partial or multi-word search. Results are filtered
+        by userId. Nickname is included when supported by the database. All responses
+        return HTTP 200; errors are indicated by a non-empty "error" field.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - search
+              properties:
+                userId:
+                  type: integer
+                  example: 1
+                search:
+                  type: string
+                  example: "jo sm"
+      responses:
+        '200':
+          description: Successful response (results or error message)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contact'
+                  error:
+                    type: string
+                    example: ""
+
+
+
+
+
+
+  /GetContacts.php:
+    post:
+      summary: Get paginated contacts for a user
+      description: >
+        Returns a list of contacts for the given user using pagination.
+        Nickname is included when supported by the database. All responses return
+        HTTP 200; errors are indicated by a non-empty "error" field.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - startIdx
+                - count
+              properties:
+                userId:
+                  type: integer
+                  example: 1
+                startIdx:
+                  type: integer
+                  example: 0
+                count:
+                  type: integer
+                  example: 10
+      responses:
+        '200':
+          description: Successful response (results or error message)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contact'
+                  error:
+                    type: string
+                    example: ""
+
+
+components:
+
+  schemas:
+
+    Contact:
+      type: object
+      properties:
+        ID:
+          type: integer
+          example: 5
+        Firstname:
+          type: string
+          example: "John"
+        Lastname:
+          type: string
+          example: "Doe"
+        Email:
+          type: string
+          example: "john@example.com"
+        Phone:
+          type: string
+          example: "555-1234"
+        Nickname:
+          type: string
+          example: "Johnny"
+          nullable: true
