@@ -295,10 +295,3 @@
   0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
   100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
 }
-
-@media (min-width: 1200px) {
-  .mission-orbit {
-    width: 100%;
-    height: auto;
-  }
-}
