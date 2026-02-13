@@ -1,21 +1,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nebulist | Dashboard</title>
+  <title>Nebulist | Contacts</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.png">
 
   <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap"
     rel="stylesheet"
   />
 
   <!-- Styles -->
+  <link rel="stylesheet" href="../css/contacts.css" />
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/dashboard.css" />
 
   <!-- Core JS -->
   <script src="../js/code.js" defer></script>
+  <script src="../js/contacts.js" defer></script>
 
   <script defer>
     document.addEventListener("DOMContentLoaded", () => {
@@ -30,38 +34,128 @@
         firstName + " " + lastName;
     });
   </script>
+  
 </head>
 
-<body>
+<body class="contacts-page">
   <!-- Fixed Header -->
   <header class="dashboard-header">
     <h1 class="dashboard-title">NEBULIST</h1>
 
     <nav class="dashboard-nav">
-      <a href="./" class="nav-link active">Home</a>
-      <a href="contacts.html" class="nav-link">Contacts</a>
+      <a href="contacts.html" class="nav-link active">Contacts</a>
       <a href="about.html" class="nav-link">About Us</a>
-      <a
-        href="#"
-        onclick="
-          doLogout();
-          return false;
-        "
-        class="nav-link logout"
-        >Logout</a
-      >
+      <a href="#" onclick="doLogout()" class="nav-link logout">Logout</a>
     </nav>
   </header>
 
   <!-- Main Content -->
-  <main class="dashboard-main">
-    <!-- Welcome Message -->
-    <div class="welcome-section">
-      <h2>Welcome back, <span class="username-text">Commander</span></h2>
-      <p>
-        Your command center awaits. Manage contacts, review activity, and
-        configure system settings from this central hub.
-      </p>
+  <div class="index-container">
+    <div class="search-container">
+      <div class="search-wrapper">
+        <div class="search-glow"></div>
+        <span class="search-icon">⌕</span>
+        <input
+          type="text"
+          id="searchInput"
+          name="search"
+          placeholder="Search contacts by name, role, or planet..."
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          inputmode="search"
+        />
+      </div>
     </div>
-  </main>
+
+    <div class="contacts-grid" id="contactsGrid">
+      <!-- Example cards are rendered by JS -->
+    </div>
+
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🛸</div>
+      <h3>No contacts found in this sector</h3>
+      <p>Try adjusting your search parameters</p>
+    </div>
+  </div>
+
+  <button class="fab" title="Add Contact" aria-label="Add contact"></button>
+
+  <div class="modal-backdrop" id="addContactModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="addContactTitle">
+      <h2 id="addContactTitle">Add Contact</h2>
+      <form id="addContactForm" autocomplete="off" novalidate>
+        <label>
+          Name
+          <input id="addName" name="name" type="text" placeholder="First Last" required/>
+        </label>
+
+        <label>
+          Nickname / Title
+          <input id="addNickname" name="nickname" type="text" placeholder="Title/Nickname"/>
+        </label>
+
+        <label>
+          Phone
+          <input id="addPhone" name="phone" type="tel" placeholder="(555) 010-1001"/>
+        </label>
+
+        <label>
+          Email
+          <input id="addEmail" name="email" type="email" placeholder="name@example.com"/>
+        </label>
+
+        <p class="modal-error" id="addContactError" aria-live="polite"></p>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-action btn-secondary" id="addCancel">
+            Cancel
+          </button>
+          <button type="submit" class="btn-action btn-primary" id="addSave">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="editContactModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editContactTitle">
+      <h2 id="editContactTitle">Edit Contact</h2>
+      <form id="editContactForm" autocomplete="off" novalidate>
+        <label>
+          Name
+          <input id="editName" name="name" type="text" placeholder="First Last" required/>
+        </label>
+
+        <label>
+          Nickname / Title
+          <input id="editNickname" name="nickname" type="text" placeholder="Title/Nickname"/>
+        </label>
+
+        <label>
+          Phone
+          <input id="editPhone" name="phone" type="tel" placeholder="(555) 010-1001"/>
+        </label>
+
+        <label>
+          Email
+          <input id="editEmail" name="email" type="email" placeholder="name@example.com"/>
+        </label>
+
+        <p class="modal-error" id="editContactError" aria-live="polite"></p>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-action btn-secondary" id="editCancel">
+            Cancel
+          </button>
+          <button type="submit" class="btn-action btn-primary" id="editSave">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
+
