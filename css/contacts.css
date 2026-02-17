@@ -469,7 +469,7 @@ h1 {
 
 /* Responsive */
 @media (max-width: 768px) {
-  body {
+  body.contacts-page {
     padding-top: 0;
   }
 
