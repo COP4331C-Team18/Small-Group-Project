@@ -1,84 +1,86 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nebulist | About</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap" rel="stylesheet">
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
-    <link rel="stylesheet" href="../css/about.css" >
-
-    <!-- Core JS -->
-    <script src="../js/code.js" defer></script>
-
-    <script defer>
-        document.addEventListener('DOMContentLoaded', () => {
-            readCookie();
-
-            if (userId < 1) {
-                window.location.replace("/login.html");
-                return;
-            }
-
-            document.querySelector('.username-text').textContent =
-                firstName + " " + lastName;
-        });
-    </script>
-    
-</head>
-
-<body>
-    <!-- Fixed Header -->
-    <header class="dashboard-header">
-        <h1 class="dashboard-title">NEBULIST</h1>
-        
-        <nav class="dashboard-nav">
-            <a href="./" class="nav-link">Home</a>
-            <a href="contacts.html" class="nav-link">Contacts</a>
-            <a href="about.html" class="nav-link active">About Us</a>
-            <a href="#" onclick="doLogout()" class="nav-link logout">Logout</a>
-        </nav>
-    </header>
-
-    <!-- Main Content -->
-    <main class="dashboard-main about-main">
-        <div class="container">
-            <section class="mission-section">
-                <div class="mission-orbit">
-                    <div class="mission-center">
-                        <h2>Our Mission</h2>
-                        <p>
-                            We are Nebulist, a team of passionate developers dedicated to creating
-                            a seamless and secure personal contact management experience. Our mission
-                            is to help users organize their contacts effortlessly while ensuring their
-                            data remains private and protected.
-                        </p>
-                    </div>
-
-                    <div class="satellite satellite-1">
-                        <span class="satellite-text"><span class="text-content">CaiCheng Li<br/>Project Lead | Frontend Developer</span></span>
-                    </div>
-                    <div class="satellite satellite-2">
-                        <span class="satellite-text"><span class="text-content">Joshua Frank<br/>Frontend Developer</span></span>
-                    </div>
-                    <div class="satellite satellite-6">
-                        <span class="satellite-text"><span class="text-content">Shanna Byrd<br/>Front End Developer</span></span>
-                    </div>
-                    <div class="satellite satellite-3">
-                        <span class="satellite-text"><span class="text-content">John Varghese<br/>API Developer</span></span>
-                    </div>
-                    <div class="satellite satellite-5">
-                        <span class="satellite-text"><span class="text-content">Akin Korkmaz<br/>API Developer</span></span>
-                    </div>
-                        <div class="satellite satellite-4">
-                        <span class="satellite-text"><span class="text-content">Sarah Porter<br/>Back End Developer</span></span>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-</body>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Nebulist | About</title>
+      <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+  
+      <!-- Fonts -->
+      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap" rel="stylesheet">
+  
+      <!-- Styles -->
+      <link rel="stylesheet" href="../css/styles.css">
+      <link rel="stylesheet" href="../css/dashboard.css">
+      <link rel="stylesheet" href="../css/about.css" >
+  
+      <!-- Core JS -->
+      <script src="../js/code.js" defer></script>
+  
+      <script defer>
+          document.addEventListener('DOMContentLoaded', () => {
+              readCookie();
+  
+              if (userId < 1) {
+                  window.location.replace("/login.html");
+                  return;
+              }
+  
+              document.querySelector('.username-text').textContent =
+                  firstName + " " + lastName;
+          });
+      </script>
+      
+  </head>
+  
+  <body>
+      <!-- Fixed Header -->
+      <header class="dashboard-header">
+          <h1 class="dashboard-title">NEBULIST</h1>
+          
+          <nav class="dashboard-nav">
+              <a href="./" class="nav-link">Home</a>
+              <a href="contacts.html" class="nav-link">Contacts</a>
+              <a href="about.html" class="nav-link active">About Us</a>
+              <a href="#" onclick="doLogout()" class="nav-link logout">Logout</a>
+          </nav>
+      </header>
+  
+      <!-- Main Content -->
+      <main class="dashboard-main about-main" role="main">
+          <div class="container">
+              <section class="mission-section">
+                  <div class="mission-orbit">
+                      <div class="mission-center">
+                          <h2>Our Mission</h2>
+                          <p>
+                              We are Nebulist, a team of passionate developers dedicated to creating
+                              a seamless and secure personal contact management experience. Our mission
+                              is to help users organize their contacts effortlessly while ensuring their
+                              data remains private and protected.
+                          </p>
+                      </div>
+  
+                      <div class="satellite satellite-1">
+                          <span class="satellite-text"><span class="text-content">CaiCheng Li<br/>Project Lead | Frontend Developer</span></span>
+                      </div>
+                      <div class="satellite satellite-2">
+                          <span class="satellite-text"><span class="text-content">Joshua Frank<br/>Frontend Developer</span></span>
+                      </div>
+                      <div class="satellite satellite-6">
+                          <span class="satellite-text"><span class="text-content">Shanna Byrd<br/>Front End Developer</span></span>
+                      </div>
+                      <div class="satellite satellite-3">
+                          <span class="satellite-text"><span class="text-content">John Varghese<br/>API Developer</span></span>
+                      </div>
+                      <div class="satellite satellite-5">
+                          <span class="satellite-text"><span class="text-content">Akin Korkmaz<br/>API Developer</span></span>
+                      </div>
+                          <div class="satellite satellite-4">
+                          <span class="satellite-text"><span class="text-content">Sarah Porter<br/>Back End Developer</span></span>
+                      </div>
+                  </div>
+              </section>
+          </div>
+      </main>
+  </body>
+</html>

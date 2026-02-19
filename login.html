@@ -1,60 +1,64 @@
-<head>
-    <meta charset="UTF-8">
-    <title>Nebulist | Login</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap" rel="stylesheet">
-
-    <!-- Main Styles -->
-    <link href="css/styles.css" rel="stylesheet">
-
-    <!-- Login Logic -->
-    <script src="js/code.js" defer></script>
-    <script defer>
-        document.addEventListener("DOMContentLoaded", async () => {
-            readCookie();
-
-            if (userId > 0) {
-                window.location.replace("/dashboard/");
-            }
-        });
-    </script>
-
-</head>
-
-<body>
-    <div class="container">
-        <h1>NEBULIST</h1>
-        <h2>Mission Access Portal</h2>
-
-        <div class="card login-card">
-            
-            <form onsubmit="doLogin(); return false;">
-                <input
-                    type="text"
-                    id="loginName"
-                    placeholder="Username"
-                    required
-                />
-
-                <input
-                    type="password"
-                    id="loginPassword"
-                    placeholder="Password"
-                    required
-                />
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Nebulist | Login</title>
+      <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+  
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap" rel="stylesheet">
+  
+      <!-- Main Styles -->
+      <link href="css/styles.css" rel="stylesheet">
+  
+      <!-- Login Logic -->
+      <script src="js/code.js" defer></script>
+      <script defer>
+          document.addEventListener("DOMContentLoaded", async () => {
+              readCookie();
+  
+              if (userId > 0) {
+                  window.location.replace("/dashboard/");
+              }
+          });
+      </script>
+  
+  </head>
+  
+  <body>
+      <div class="container">
+          <h1>NEBULIST</h1>
+          <h2>Mission Access Portal</h2>
+  
+          <main role="main">
+            <div class="card login-card">
                 
-                <div id="loginResult" class="login-result"></div>
-
-                <button type="submit">Log In</button>
-            </form>
-
-            <div class="login-links">
-                <a href="/createaccount.html">Create Account</a>
-                <span>|</span>
-                <a href="/">Return Home</a>
+                <form onsubmit="doLogin(); return false;">
+                    <input
+                        type="text"
+                        id="loginName"
+                        placeholder="Username"
+                        required
+                    />
+    
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Password"
+                        required
+                    />
+                    
+                    <div id="loginResult" class="login-result"></div>
+    
+                    <button type="submit">Log In</button>
+                </form>
+    
+                <div class="login-links">
+                    <a href="/createaccount.html">Create Account</a>
+                    <span>|</span>
+                    <a href="/">Return Home</a>
+                </div>
             </div>
-        </div>
-    </div>
-</body>
+          </main>
+      </div>
+  </body>
+</html>
