@@ -71,6 +71,7 @@ h2 {
     border: 1px solid rgba(139, 233, 253, 0.3);
     border-radius: 16px;
     padding: 30px 40px;
+    width: 100%;
     max-width: 420px;
     box-shadow: 0 0 40px rgba(139, 233, 253, 0.15);
 }
@@ -79,6 +80,14 @@ h2 {
     font-size: 1.05rem;
     line-height: 1.6;
     margin-bottom: 25px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 420px;
 }
 
 /* Buttons */
