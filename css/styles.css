@@ -82,13 +82,6 @@ h2 {
     margin-bottom: 25px;
 }
 
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 420px;
-}
 
 /* Buttons */
 .buttons {
@@ -127,6 +120,22 @@ footer {
 .login-card {
     width: 100%;
     max-width: 360px;
+}
+
+.login-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 420px;
+}
+
+.create-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 420px;
 }
 
 /* Form Styling */
