@@ -26,7 +26,19 @@
     $email = $inputData['email'];
     $phone = $inputData['phone'];
     
+    // Email validation
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { 
+        returnWithError("Invalid email format"); 
+        return; 
+    }
 
+    // Phone validation
+    $digits = preg_replace('/\D+/', '', $phone);
+    if (strlen($digits) !== 10) {
+        returnWithError("Invalid phone number");
+        return;
+    }
+    
     // Connect to the database
     $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "NEBULIST");
 
