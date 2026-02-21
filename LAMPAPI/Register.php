@@ -11,7 +11,7 @@
     $password = $inData['Password'];
     $email = $inData['Email'];
 
-    // Email validation
+    // Email validation using PHP's built in filter
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { 
         returnWithError("Invalid email format"); 
         return; 

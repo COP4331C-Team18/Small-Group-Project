@@ -85,20 +85,20 @@ paths:
               properties:
                 Firstname:
                   type: string
-                  example: "Alice"
+                  example: "Joe"
                 Lastname:
                   type: string
-                  example: "Smith"
+                  example: "Mama"
                 Username:
                   type: string
-                  example: "asmith"
+                  example: "jmama"
                 Password:
                   type: string
                   example: "mypassword123"
                 Email:
                   type: string
                   format: email
-                  example: "alice@example.com"
+                  example: "joe.mama@example.com"
                   description: Must be a valid email address.
       responses:
         '200':
