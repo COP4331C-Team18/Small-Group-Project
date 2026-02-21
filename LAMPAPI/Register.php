@@ -11,6 +11,12 @@
     $password = $inData['Password'];
     $email = $inData['Email'];
 
+    // Email validation using PHP's built in filter
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { 
+        returnWithError("Invalid email format"); 
+        return; 
+    }
+
     // Connect to the database
     $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "NEBULIST");
 

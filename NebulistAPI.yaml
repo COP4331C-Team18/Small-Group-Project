@@ -69,7 +69,7 @@ paths:
         Creates a new user account with firstname, lastname, username, password,
         and email. All responses return HTTP 200; errors are indicated by
         a non-empty "error" field. Duplicate usernames or emails will
-        return a database error message.
+        return a database error message. Backend enforces email format validation.
       requestBody:
         required: true
         content:
@@ -85,19 +85,21 @@ paths:
               properties:
                 Firstname:
                   type: string
-                  example: "Alice"
+                  example: "Joe"
                 Lastname:
                   type: string
-                  example: "Smith"
+                  example: "Mama"
                 Username:
                   type: string
-                  example: "asmith"
+                  example: "jmama"
                 Password:
                   type: string
                   example: "mypassword123"
                 Email:
                   type: string
-                  example: "alice@example.com"
+                  format: email
+                  example: "joe.mama@example.com"
+                  description: Must be a valid email address.
       responses:
         '200':
           description: Successful registration or error message
@@ -120,7 +122,9 @@ paths:
       description: >
         Creates a new contact for the specified user. All responses return HTTP 200;
         errors are indicated by a non-empty "error" field. Duplicate email+phone
-        combinations for the same user will return an error.
+        combinations for the same user will return an error. Backend enforces email
+        format validation and requires phone numbers to contain exactly 10 digits
+        after removing non-numeric characters.
       requestBody:
         required: true
         content:
@@ -146,10 +150,16 @@ paths:
                   description: Optional nickname for the contact
                 Email:
                   type: string
+                  format: email
                   example: "john@example.com"
+                  description: Must be a valid email address.
                 Phone:
                   type: string
-                  example: "555-1234"
+                  example: "555-123-4567"
+                  description: >
+                    Phone number must contain exactly 10 digits after removing
+                    non-numeric characters. Formats like "5551234567" or
+                    "555-123-4567" are accepted.
                 UserID:
                   type: integer
                   example: 1
@@ -175,7 +185,6 @@ paths:
                     example: ""
 
 
-
   /EditContact.php:
     post:
       summary: Edit an existing contact
@@ -183,7 +192,8 @@ paths:
         Updates a contact's firstname, lastname, phone, email, and optionally nickname
         for the given user. All responses return HTTP 200; errors are indicated by a
         non-empty "error" field. Duplicate email+phone combinations for the same user
-        will return an error.
+        will return an error. Backend enforces email format validation and requires
+        phone numbers to contain exactly 10 digits after removing non-numeric characters.
       requestBody:
         required: true
         content:
@@ -216,10 +226,16 @@ paths:
                   description: Optional nickname for the contact
                 phone:
                   type: string
-                  example: "555-1234"
+                  example: "555-123-4567"
+                  description: >
+                    Phone number must contain exactly 10 digits after removing
+                    non-numeric characters. Formats like "5551234567" or
+                    "555-123-4567" are accepted.
                 email:
                   type: string
+                  format: email
                   example: "john@example.com"
+                  description: Must be a valid email address.
       responses:
         '200':
           description: Successful update or error message
@@ -238,7 +254,6 @@ paths:
                   error:
                     type: string
                     example: ""
-
 
   /DeleteContact.php:
     post:
@@ -286,6 +301,8 @@ paths:
       description: >
         Updates a user's firstname, lastname, username, password, email, and phone.
         All responses return HTTP 200; errors are indicated by a non-empty "error" field.
+        Backend enforces email format validation and requires phone numbers to contain
+        exactly 10 digits after removing non-numeric characters.
       requestBody:
         required: true
         content:
@@ -318,10 +335,16 @@ paths:
                   example: "newpassword123"
                 email:
                   type: string
+                  format: email
                   example: "alice@example.com"
+                  description: Must be a valid email address.
                 phone:
                   type: string
-                  example: "555-9876"
+                  example: "555-987-6543"
+                  description: >
+                    Phone number must contain exactly 10 digits after removing
+                    non-numeric characters. Formats like "5559876543" or
+                    "555-987-6543" are accepted.
       responses:
         '200':
           description: Successful update or error message

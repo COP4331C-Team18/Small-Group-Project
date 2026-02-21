@@ -19,6 +19,19 @@
     $userId = $inData['UserID'];
     $nicknameSupported = true;
 
+    // Email validation
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {   // default PHP email validation
+        returnWithError("Invalid email format"); 
+        return; 
+    }
+
+    // Phone validation
+    $digits = preg_replace('/\D+/', '', $phone);
+    if (strlen($digits) !== 10) {  // must be a 10 digit phone number
+        returnWithError("Invalid phone number");
+        return;
+    }
+
     // Connect to the database
     $conn = new mysqli("localhost","TheBeast", "WeLoveCOP4331", "NEBULIST");
 
