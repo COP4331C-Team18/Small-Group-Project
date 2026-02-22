@@ -1,3 +1,54 @@
+/* CSS CUSTOM PROPERTIES — Dark (default) & Light themes */
+:root {
+    /* Dark theme tokens */
+    --bg-gradient:        radial-gradient(circle at top, #1b2735 0%, #090a0f 100%);
+    --star-opacity:       0.4;
+    --text-primary:       #ffffff;
+    --text-secondary:     #cbd5e1;
+    --text-muted:         #94a3b8;
+    --accent:             #8be9fd;
+    --accent-purple:      #a78bfa;
+    --card-bg:            rgba(15, 23, 42, 0.85);
+    --card-border:        rgba(139, 233, 253, 0.3);
+    --card-shadow:        rgba(139, 233, 253, 0.15);
+    --input-bg:           rgba(15, 23, 42, 0.9);
+    --input-border:       rgba(139, 233, 253, 0.3);
+    --input-color:        #e5e7eb;
+    --input-placeholder:  #94a3b8;
+    --input-focus-border: #8be9fd;
+    --input-focus-shadow: rgba(139, 233, 253, 0.4);
+    --link-color:         #8be9fd;
+    --btn-text:           #0f172a;
+    --btn-gradient:       linear-gradient(135deg, #8be9fd, #a78bfa);
+    --btn-hover-shadow:   rgba(139, 233, 253, 0.6);
+    --footer-color:       #94a3b8;
+}
+
+/* ---- Light theme overrides ---- */
+body.light-mode {
+    --bg-gradient:        radial-gradient(circle at top, #dbeafe 0%, #f0f9ff 55%, #ede9fe 100%);
+    --star-opacity:       0;               /* hide stardust in light mode */
+    --text-primary:       #0f172a;
+    --text-secondary:     #334155;
+    --text-muted:         #64748b;
+    --accent:             #0284c7;          /* sky-blue — readable on light */
+    --accent-purple:      #7c3aed;
+    --card-bg:            rgba(255, 255, 255, 0.75);
+    --card-border:        rgba(2, 132, 199, 0.25);
+    --card-shadow:        rgba(2, 132, 199, 0.12);
+    --input-bg:           rgba(248, 250, 252, 0.95);
+    --input-border:       rgba(2, 132, 199, 0.3);
+    --input-color:        #0f172a;
+    --input-placeholder:  #94a3b8;
+    --input-focus-border: #0284c7;
+    --input-focus-shadow: rgba(2, 132, 199, 0.25);
+    --link-color:         #0284c7;
+    --btn-text:           #ffffff;
+    --btn-gradient:       linear-gradient(135deg, #0284c7, #7c3aed);
+    --btn-hover-shadow:   rgba(2, 132, 199, 0.5);
+    --footer-color:       #64748b;
+}
+
 /* Page Background */
 html {
     height: auto;
@@ -9,10 +60,11 @@ body {
     height: auto;
     margin: 0;
     font-family: "Ubuntu", sans-serif;
-    color: #ffffff;
-    background: radial-gradient(circle at top, #1b2735 0%, #090a0f 100%);
+    color: var(--text-primary);
+    background: var(--bg-gradient);
     overflow-y: auto;
     overflow-x: hidden;
+    transition: background 0.4s ease, color 0.3s ease;
 }
 
 /* Animated Star Field */
@@ -23,17 +75,14 @@ body::before {
     height: 200%;
     background: url("https://www.transparenttextures.com/patterns/stardust.png");
     animation: drift 120s linear infinite;
-    opacity: 0.4;
+    opacity: var(--star-opacity);
     z-index: 0;
+    transition: opacity 0.4s ease;
 }
 
 @keyframes drift {
-    from {
-        transform: translate(0, 0);
-    }
-    to {
-        transform: translate(-50%, -50%);
-    }
+    from { transform: translate(0, 0); }
+    to   { transform: translate(-50%, -50%); }
 }
 
 /* Layout Container */
@@ -56,29 +105,32 @@ h1 {
     font-size: 3.5rem;
     letter-spacing: 3px;
     margin-bottom: 10px;
-    color: #8be9fd;
+    color: var(--accent);
 }
 
 h2 {
     font-weight: 300;
     margin-bottom: 30px;
-    color: #cbd5e1;
+    color: var(--text-secondary);
 }
 
 /* Card */
 .card {
-    background: rgba(15, 23, 42, 0.85);
-    border: 1px solid rgba(139, 233, 253, 0.3);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 16px;
     padding: 30px 40px;
     max-width: 420px;
-    box-shadow: 0 0 40px rgba(139, 233, 253, 0.15);
+    box-shadow: 0 0 40px var(--card-shadow);
+    backdrop-filter: blur(12px);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card p {
     font-size: 1.05rem;
     line-height: 1.6;
     margin-bottom: 25px;
+    color: var(--text-secondary);
 }
 
 /* Buttons */
@@ -96,14 +148,14 @@ button {
     border-radius: 30px;
     border: none;
     cursor: pointer;
-    color: #0f172a;
-    background: linear-gradient(135deg, #8be9fd, #a78bfa);
+    color: var(--btn-text);
+    background: var(--btn-gradient);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 15px rgba(139, 233, 253, 0.6);
+    box-shadow: 0 0 15px var(--btn-hover-shadow);
 }
 
 /* Footer */
@@ -111,10 +163,10 @@ footer {
     position: absolute;
     bottom: 15px;
     font-size: 0.8rem;
-    color: #94a3b8;
+    color: var(--footer-color);
 }
 
-/* Login Card Overrides */
+/* Login Card */
 .login-card {
     width: 100%;
     max-width: 360px;
@@ -131,35 +183,73 @@ input {
     padding: 12px 16px;
     font-size: 1rem;
     border-radius: 10px;
-    border: 1px solid rgba(139, 233, 253, 0.3);
-    background: rgba(15, 23, 42, 0.9);
-    color: #e5e7eb;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--input-color);
     outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
 input::placeholder {
-    color: #94a3b8;
+    color: var(--input-placeholder);
 }
 
 input:focus {
-    border-color: #8be9fd;
-    box-shadow: 0 0 8px rgba(139, 233, 253, 0.4);
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 8px var(--input-focus-shadow);
 }
 
 /* Login Links */
 .login-links {
     margin-top: 20px;
     font-size: 0.85rem;
-    color: #94a3b8;
+    color: var(--text-muted);
     text-align: center;
 }
 
 .login-links a {
-    color: #8be9fd;
+    color: var(--link-color);
     text-decoration: none;
     margin: 0 6px;
 }
 
 .login-links a:hover {
     text-decoration: underline;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--accent);
+    font-family: "Orbitron", sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 14px var(--card-shadow);
+    transform: translateY(-1px);
+    color: var(--text-primary);
+    background: none;
+}
+
+/* The sun/moon icon inside the toggle */
+.theme-toggle .toggle-icon {
+    font-size: 1rem;
+    line-height: 1;
+    transition: transform 0.4s ease;
+}
+
+.theme-toggle:hover .toggle-icon {
+    transform: rotate(20deg) scale(1.15);
 }
