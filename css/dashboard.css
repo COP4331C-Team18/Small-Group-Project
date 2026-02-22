@@ -77,16 +77,20 @@
 /* Logout Button */
 .nav-link.logout {
     margin-left: auto;
-    color: #ff4444;
-    border-color: rgba(255, 68, 68, 0.3);
+    color: #ffa6a6;
+    border-color: rgba(255, 23, 23, 0.522);
     background: rgba(255, 68, 68, 0.1);
+    border-width: 2px;
+    font-weight: bold;
 }
 
 .nav-link.logout:hover {
     background: rgba(255, 68, 68, 0.2);
-    border-color: rgba(255, 68, 68, 0.8);
+    border-color: rgb(255, 39, 39);
     box-shadow: 0 0 20px rgba(255, 68, 68, 0.4), inset 0 0 10px rgba(255, 68, 68, 0.1);
     color: #ffffff;
+    border-width: 2px;
+    font-weight: bold;
     transform: translateY(-2px);
 }
 
