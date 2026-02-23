@@ -39,8 +39,10 @@ function doLogin()
 		
 				if( userId < 1 )
 				{		
-					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
-					return;
+					const result = document.getElementById("loginResult");
+          result.innerHTML = "User/Password combination incorrect";
+          result.style.color = "red";
+          return;
 				}
 		
 				firstName = jsonObject.firstName;
