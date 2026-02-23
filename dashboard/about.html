@@ -35,14 +35,25 @@
   <body>
       <!-- Fixed Header -->
       <header class="dashboard-header">
-          <h1 class="dashboard-title">NEBULIST</h1>
+        <h1 class="dashboard-title">NEBULIST</h1>
           
-          <nav class="dashboard-nav">
-              <a href="./" class="nav-link">Home</a>
-              <a href="contacts.html" class="nav-link">Contacts</a>
-              <a href="about.html" class="nav-link active">About Us</a>
-              <a href="#" onclick="doLogout()" class="nav-link logout">Logout</a>
-          </nav>
+        <nav class="dashboard-nav">
+            <a href="./" class="nav-link active">Home</a>
+            <a href="contacts.html" class="nav-link">Contacts</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <button class="theme-toggle nav-link" onclick="toggleTheme()" aria-label="Toggle light/dark mode">
+            <span class="toggle-icon">🌙</span>
+            <span class="toggle-label">DARK</span>
+            </button>
+            <a
+            href="#"
+            onclick="
+                doLogout();
+                return false;
+            "
+            class="nav-link logout"
+            >Logout</a>
+        </nav>
       </header>
   
       <!-- Main Content -->
