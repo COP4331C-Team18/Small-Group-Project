@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,21 +9,19 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap" rel="stylesheet" />
   
     <!-- Styles -->
-    <link rel="stylesheet" href="../css/contacts.css" />
-    <link rel="stylesheet" href="../css/styles.css" />
-    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/contacts.css" />
   
     <!-- Core JS -->
-    <script src="../js/code.js" defer></script>
-    <script src="../js/contacts.js" defer></script>
-    <script src="../js/theme.js"></script>
-  </head>
+    <script src="js/code.js" defer></script>
+    <script src="js/contacts.js" defer></script>
+    <script src="js/theme.js" defer></script>
+  <base target="_blank">
+</head>
   
   <body class="contacts-page">
     <!-- Fixed Header -->
@@ -30,22 +29,17 @@
       <h1 class="dashboard-title">NEBULIST</h1>
   
       <nav class="dashboard-nav">
-        <a href="./" class="nav-link active">Home</a>
-        <a href="contacts.html" class="nav-link">Contacts</a>
+        <a href="./" class="nav-link">Home</a>
+        <a href="contacts.html" class="nav-link active">Contacts</a>
         <a href="about.html" class="nav-link">About Us</a>
+        
+        <!-- Theme Toggle Button -->
         <button class="theme-toggle nav-link" onclick="toggleTheme()" aria-label="Toggle light/dark mode">
           <span class="toggle-icon">🌙</span>
           <span class="toggle-label">DARK</span>
         </button>
-        <a
-          href="#"
-          onclick="
-            doLogout();
-            return false;
-          "
-          class="nav-link logout"
-          >Logout</a
-        >
+        
+        <a href="#" onclick="doLogout(); return false;" class="nav-link logout">Logout</a>
       </nav>
     </header>
   
@@ -55,7 +49,7 @@
         <div class="search-container">
           <div class="search-wrapper">
             <div class="search-glow"></div>
-            <span class="search-icon">âŒ•</span>
+            <span class="search-icon">⌕</span>
             <input
               type="text"
               id="searchInput"
@@ -71,11 +65,11 @@
         </div>
     
         <div class="contacts-grid" id="contactsGrid">
-        <!-- Example cards are rendered by JS -->
+          <!-- Contact cards are rendered by JS -->
         </div>
     
         <div class="empty-state" id="emptyState">
-          <div class="empty-icon">ðŸ›¸</div>
+          <div class="empty-icon">🛸</div>
           <h2>No contacts found in this sector</h2>
           <p>Try adjusting your search parameters</p>
         </div>

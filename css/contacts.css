@@ -1,521 +1,641 @@
-/* Contacts CSS */
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Page Background */
 html {
-    height: auto;
-    min-height: 100%;
+  height: auto;
+  min-height: 100%;
 }
 
 body.contacts-page {
-    min-height: 100vh;
-    height: auto;
-    margin: 0;
-    font-family: "Ubuntu", sans-serif;
-    color: var(--text-primary);
-    background: var(--bg-gradient);
-    padding-top: 175px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    transition: background 0.4s ease, color 0.3s ease;
+  min-height: 100vh;
+  height: auto;
+  margin: 0;
+  font-family: "Ubuntu", sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  /* The dashboard header is fixed, so reserve its height here.
+             Using padding avoids top-margin collapsing issues. */
+  padding-top: 175px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* Animated Star Field */
 body::before {
-    content: "";
-    position: fixed;
-    width: 200%;
-    height: 200%;
-    background: url("https://www.transparenttextures.com/patterns/stardust.png");
-    animation: drift 120s linear infinite;
-    opacity: var(--star-opacity);
-    z-index: 0;
-    pointer-events: none;
-    will-change: transform;
-    transition: opacity 0.4s ease;
+  content: "";
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  background: url("https://www.transparenttextures.com/patterns/stardust.png");
+  animation: drift 120s linear infinite;
+  opacity: var(--star-opacity);
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform;
+  transition: opacity 0.3s ease;
 }
 
 @keyframes drift {
-    from { transform: translate(0, 0); }
-    to   { transform: translate(-50%, -50%); }
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-50%, -50%);
+  }
 }
 
 /* Main Container */
 .index-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
 /* Header Section */
 header {
-    text-align: center;
-    margin-bottom: 50px;
-    animation: fadeInDown 1s ease-out;
+  text-align: center;
+  margin-bottom: 50px;
+  animation: fadeInDown 1s ease-out;
 }
 
 h1 {
-    font-family: "Orbitron", sans-serif;
-    font-size: 3.5rem;
-    letter-spacing: 3px;
-    margin-bottom: 10px;
-    color: var(--accent);
-    transition: color 0.3s ease;
+  font-family: "Orbitron", sans-serif;
+  font-size: 3.5rem;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+  color: var(--text-accent);
+  transition: color 0.3s ease;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
 }
 
 .subtitle {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    font-weight: 300;
-    letter-spacing: 2px;
-    transition: color 0.3s ease;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  letter-spacing: 2px;
+  transition: color 0.3s ease;
 }
 
 /* Search Section */
 .search-container {
-    max-width: 600px;
-    margin: 0 auto 50px;
-    position: relative;
-    animation: fadeInUp 1s ease-out 0.3s both;
+  max-width: 600px;
+  margin: 0 auto 50px;
+  position: relative;
+  animation: fadeInUp 1s ease-out 0.3s both;
 }
 
-#searchInput:focus { box-shadow: none; }
+#searchInput:focus {
+  box-shadow: none;
+}
 
 .search-wrapper {
-    position: relative;
-    background: var(--card-bg);
-    border-radius: 50px;
-    border: 1px solid var(--card-border);
-    padding: 5px;
-    transition: all 0.4s ease;
-    backdrop-filter: blur(10px);
+  position: relative;
+  background: var(--bg-card);
+  border-radius: 50px;
+  border: 1px solid var(--border-secondary);
+  padding: 5px;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
 }
 
 .search-wrapper:focus-within {
-    border-color: var(--accent);
-    box-shadow: 0 2px 8px var(--card-shadow);
-    transform: translateY(-1px);
+  border-color: var(--text-accent);
+  box-shadow: 0 2px 8px rgba(139, 233, 253, 0.15);
+  transform: translateY(-1px);
 }
 
 .search-icon {
-    position: absolute;
-    left: 25px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--accent);
-    font-size: 1.2rem;
-    pointer-events: none;
-    transition: all 0.3s ease;
+  position: absolute;
+  left: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-accent);
+  font-size: 1.2rem;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.search-wrapper:focus-within .search-icon {
+  transform: translateY(-50%);
+  filter: none;
 }
 
 #searchInput {
-    width: 100%;
-    padding: 18px 25px 18px 55px;
-    font-size: 1.1rem;
-    border: none;
-    background: transparent;
-    color: var(--input-color);
-    font-family: "Ubuntu", sans-serif;
-    outline: none;
-    transition: color 0.3s ease;
+  width: 100%;
+  padding: 18px 25px 18px 55px;
+  font-size: 1.1rem;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: "Ubuntu", sans-serif;
+  outline: none;
+  transition: color 0.3s ease;
 }
 
 #searchInput::placeholder {
-    color: var(--input-placeholder);
-    transition: all 0.3s ease;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
 }
 
 #searchInput:focus::placeholder {
-    color: var(--accent);
-    opacity: 0.7;
+  color: var(--text-accent);
+  opacity: 0.7;
 }
 
-.search-glow { display: none; }
+.search-glow {
+  display: none;
+}
 
 /* Contacts Grid */
 .contacts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
 }
 
 /* Contact Card */
 .contact-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 30px;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    transform-style: preserve-3d;
-    will-change: transform;
-    backface-visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    animation: fadeInUp 0.6s ease-out backwards;
-    cursor: default;
+  background: var(--bg-card);
+  border: 1px solid var(--border-secondary);
+  border-radius: 20px;
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: fadeInUp 0.6s ease-out backwards;
+  cursor: default;
 }
 
-.contact-card:nth-child(1) { animation-delay: 0.1s; }
-.contact-card:nth-child(2) { animation-delay: 0.2s; }
-.contact-card:nth-child(3) { animation-delay: 0.3s; }
-.contact-card:nth-child(4) { animation-delay: 0.4s; }
-.contact-card:nth-child(5) { animation-delay: 0.5s; }
-.contact-card:nth-child(6) { animation-delay: 0.6s; }
+.contact-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.contact-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.contact-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.contact-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.contact-card:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.contact-card:nth-child(6) {
+  animation-delay: 0.6s;
+}
 
-.contact-card::before { display: none; }
+.contact-card::before {
+  display: none;
+}
 
 .contact-card:hover {
-    border-color: var(--input-focus-border);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--border-hover);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.card-glow { display: none; }
+.card-glow {
+  display: none;
+}
 
-/* Avatar */
+/* Avatar Section */
 .avatar-container {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 20px;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
 }
 
 .avatar {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #1b2735 0%, #090a0f 100%);
-    border: 2px solid var(--card-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Orbitron", sans-serif;
-    font-size: 1.8rem;
-    color: var(--accent);
-    position: relative;
-    z-index: 2;
-    transition: all 0.4s ease;
-    overflow: hidden;
-}
-
-body.light-mode .avatar {
-    background: linear-gradient(135deg, #dbeafe 0%, #ede9fe 100%);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1b2735 0%, #090a0f 100%);
+  border: 2px solid var(--border-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.8rem;
+  color: var(--text-accent);
+  position: relative;
+  z-index: 2;
+  transition: all 0.4s ease;
+  overflow: hidden;
 }
 
 .contact-card:hover .avatar {
-    border-color: var(--accent);
-    box-shadow: 0 0 8px var(--card-shadow);
-    transform: scale(1.05);
+  border-color: var(--text-accent);
+  box-shadow: 0 0 8px rgba(139, 233, 253, 0.3);
+  transform: scale(1.05);
 }
 
-.avatar-ring { display: none; }
+[data-theme="light"] .avatar {
+  background: linear-gradient(135deg, #e8f4f8 0%, #d0e8f0 100%);
+}
+
+.avatar-ring {
+  display: none;
+}
 
 /* Contact Info */
 .contact-name {
-    font-family: "Orbitron", sans-serif;
-    font-size: 1.3rem;
-    margin-bottom: 8px;
-    color: var(--text-primary);
-    text-align: center;
-    transition: color 0.3s ease;
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  text-align: center;
+  transition: color 0.3s ease;
 }
 
 .contact-role {
-    color: var(--accent-purple);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
-    text-align: center;
-    font-weight: 500;
-    transition: color 0.3s ease;
+  color: var(--text-role);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .contact-details {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid var(--card-border);
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-secondary);
+  transition: border-color 0.3s ease;
 }
 
 .detail-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
 }
 
 .contact-card:hover .detail-item {
-    color: var(--text-secondary);
-    transform: translateX(5px);
+  color: var(--text-secondary);
+  transform: translateX(5px);
 }
 
 .detail-icon {
-    color: var(--accent);
-    width: 20px;
-    text-align: center;
-    transition: color 0.3s ease;
+  color: var(--text-accent);
+  width: 20px;
+  text-align: center;
+  transition: color 0.3s ease;
 }
 
 /* Action Buttons */
 .card-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.4s ease;
 }
 
 .btn-action {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 25px;
-    font-family: "Orbitron", sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    font-weight: 700;
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 25px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
 .btn-primary {
-    background: var(--btn-gradient);
-    color: var(--btn-text);
+  background: var(--bg-button);
+  color: #ffffff;
 }
 
 .btn-secondary {
-    background: transparent;
-    border: 1px solid var(--card-border);
-    color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--border-primary);
+  color: var(--text-accent);
+  transition: all 0.3s ease;
 }
 
 .btn-action:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px var(--card-shadow);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button);
 }
 
 .btn-primary:hover {
-    box-shadow: 0 5px 20px var(--btn-hover-shadow);
+  box-shadow: var(--shadow-button);
 }
 
-/* Delete Button */
+.btn-secondary:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-nav);
+}
+
+/* Delete Button (replaces status dot) */
 .delete-contact {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 68, 68, 0.55);
-    background: rgba(255, 68, 68, 0.14);
-    color: #ff4444;
-    font-size: 0;
-    font-weight: 700;
-    cursor: pointer;
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: transform 0.2s ease, box-shadow 0.2s ease,
-                background 0.2s ease, border-color 0.2s ease;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 68, 68, 0.55);
+  background: rgba(255, 68, 68, 0.14);
+  color: #ff4444;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .delete-contact::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 10px;
-    height: 2px;
-    background: currentColor;
-    border-radius: 2px;
-    transform: translate(-50%, -50%);
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transform: translate(-50%, -50%);
 }
 
 .delete-contact:hover {
-    transform: translateY(-1px);
-    background: rgba(255, 68, 68, 0.22);
-    border-color: rgba(255, 68, 68, 0.8);
-    box-shadow: 0 0 18px rgba(255, 68, 68, 0.35);
+  transform: translateY(-1px);
+  background: rgba(255, 68, 68, 0.22);
+  border-color: rgba(255, 68, 68, 0.8);
+  box-shadow: 0 0 18px rgba(255, 68, 68, 0.35);
 }
 
 .delete-contact:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.35);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.35);
 }
 
 /* Empty State */
 .empty-state {
-    text-align: center;
-    padding: 60px;
-    color: var(--text-muted);
-    display: none;
-    animation: fadeIn 0.5s ease;
+  text-align: center;
+  padding: 60px;
+  color: var(--text-muted);
+  display: none;
+  animation: fadeIn 0.5s ease;
+  transition: color 0.3s ease;
 }
-.empty-state.show { display: block; }
+
+.empty-state.show {
+  display: block;
+}
 
 .empty-icon {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    opacity: 0.5;
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.5;
 }
 
-/* FAB */
+/* Floating Add Button */
 .fab {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: var(--btn-gradient);
-    border: none;
-    color: var(--btn-text);
-    font-size: 0;
-    cursor: pointer;
-    box-shadow: 0 5px 20px var(--btn-hover-shadow);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--bg-button);
+  border: none;
+  color: #ffffff;
+  font-size: 0;
+  cursor: pointer;
+  box-shadow: var(--shadow-button);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
 }
 
-.fab::before, .fab::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 18px;
-    height: 3px;
-    background: currentColor;
-    border-radius: 3px;
-    transform: translate(-50%, -50%);
+.fab::before,
+.fab::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 3px;
+  background: currentColor;
+  border-radius: 3px;
+  transform: translate(-50%, -50%);
 }
-.fab::after { transform: translate(-50%, -50%) rotate(90deg); }
+
+.fab::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
 
 .fab:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 30px var(--btn-hover-shadow);
+  transform: scale(1.1);
+  box-shadow: 0 8px 30px rgba(139, 233, 253, 0.6);
 }
 
-/* Animations */
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-@keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Filter transitions */
-.contact-card.hide {
-    animation: fadeOut 0.3s ease forwards;
-    pointer-events: none;
-}
-.contact-card.refilter {
-    animation: fadeInUp 0.45s ease-out both;
-}
-@keyframes fadeOut {
-    to { opacity: 0; transform: scale(0.8); }
-}
-
-/* Modal */
-.modal-backdrop {
-    position: fixed;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: rgba(2, 6, 23, 0.65);
-    backdrop-filter: blur(8px);
-    z-index: 200;
-}
-body.light-mode .modal-backdrop {
-    background: rgba(15, 23, 42, 0.45);
-}
-.modal-backdrop.show {
-    display: flex;
-    animation: fadeIn 0.2s ease;
-}
-
-.modal {
-    width: min(520px, 100%);
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 18px;
-    padding: 22px;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 40px var(--card-shadow);
-    transition: background 0.3s ease;
-}
-
-.modal h2 {
-    font-family: "Orbitron", sans-serif;
-    color: var(--accent);
-    letter-spacing: 1px;
-    margin-bottom: 16px;
-    transition: color 0.3s ease;
-}
-
-#addContactForm, #editContactForm {
-    display: grid;
-    gap: 12px;
-}
-
-#addContactForm label, #editContactForm label {
-    display: grid;
-    gap: 6px;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
-}
-
-#addContactForm input, #editContactForm input {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 12px;
-    border: 1px solid var(--input-border);
-    background: var(--input-bg);
-    color: var(--input-color);
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-}
-
-#addContactForm input:focus, #editContactForm input:focus {
-    border-color: var(--input-focus-border);
-    box-shadow: 0 0 0 3px var(--input-focus-shadow);
-}
-
-.modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 6px;
-}
-
-.modal-error {
-    min-height: 1.2em;
-    color: #ff7777;
-    font-size: 0.9rem;
-    margin: 2px 0 0;
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    body.contacts-page { padding-top: 0; }
-    h1 { font-size: 2rem; }
-    .contacts-grid { grid-template-columns: 1fr; }
-    .fab { bottom: 20px; right: 20px; }
+  body.contacts-page {
+    padding-top: 0;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+  .contacts-grid {
+    grid-template-columns: 1fr;
+  }
+  .fab {
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+/* Hide animation for filtering */
+.contact-card.hide {
+  animation: fadeOut 0.3s ease forwards;
+  pointer-events: none;
+}
+
+/* When a search eliminates any cards, briefly hide all then re-show matches */
+.contact-card.refilter {
+  animation: fadeInUp 0.45s ease-out both;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* Add Contact Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(2, 6, 23, 0.65);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+}
+
+[data-theme="light"] .modal-backdrop {
+  background: rgba(240, 248, 255, 0.75);
+}
+
+.modal-backdrop.show {
+  display: flex;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal {
+  width: min(520px, 100%);
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    0 0 40px rgba(139, 233, 253, 0.12);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.modal h2 {
+  font-family: "Orbitron", sans-serif;
+  color: var(--text-accent);
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  transition: color 0.3s ease;
+}
+
+#addContactForm {
+  display: grid;
+  gap: 12px;
+}
+
+#editContactForm {
+  display: grid;
+  gap: 12px;
+}
+
+#addContactForm label {
+  display: grid;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+#editContactForm label {
+  display: grid;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+#addContactForm input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border-secondary);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#editContactForm input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border-secondary);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#addContactForm input:focus {
+  border-color: var(--text-accent);
+  box-shadow: 0 0 0 3px rgba(139, 233, 253, 0.15);
+}
+
+#editContactForm input:focus {
+  border-color: var(--text-accent);
+  box-shadow: 0 0 0 3px rgba(139, 233, 253, 0.15);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.modal-error {
+  min-height: 1.2em;
+  color: #ff7777;
+  font-size: 0.9rem;
+  margin: 2px 0 0;
+}
+
+[data-theme="light"] .modal-error {
+  color: #dc2626;
 }
