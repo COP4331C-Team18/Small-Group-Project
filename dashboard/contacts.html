@@ -42,12 +42,12 @@
         <div class="search-container">
           <div class="search-wrapper">
             <div class="search-glow"></div>
-            <span class="search-icon">âŒ•</span>
+            <span class="search-icon">🔎</span>
             <input
               type="text"
               id="searchInput"
               name="search"
-              placeholder="Search contacts by name, role, or planet..."
+              placeholder="Search contacts by name"
               autocomplete="off"
               autocapitalize="off"
               autocorrect="off"
@@ -57,14 +57,15 @@
           </div>
         </div>
     
+        <h2 class="visually-hidden">Contacts</h2>
         <div class="contacts-grid" id="contactsGrid">
         <!-- Example cards are rendered by JS -->
         </div>
     
         <div class="empty-state" id="emptyState">
-          <div class="empty-icon">ðŸ›¸</div>
+          <div class="empty-icon">🛸</div>
           <h2>No contacts found in this sector</h2>
-          <p>Try adjusting your search parameters</p>
+          <p>Try adjusting your search parameters or create a new contact</p>
         </div>
       </div>
     
@@ -86,7 +87,7 @@
     
             <label>
               Phone
-              <input id="addPhone" name="phone" type="tel" placeholder="(555) 010-1001"/>
+              <input id="addPhone" name="phone" type="tel" placeholder="(123) 456-7890"/>
             </label>
     
             <label>
