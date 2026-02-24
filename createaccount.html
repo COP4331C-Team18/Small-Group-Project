@@ -1,118 +1,52 @@
-
-<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nebulist | About</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap" rel="stylesheet">
-
-    <!-- Main Styles -->
-    <link href="../css/styles.css" rel="stylesheet">
-    <link href="../css/about.css" rel="stylesheet">
-    <link href="../css/dashboard.css" rel="stylesheet">
-    
-    <!-- Core JS -->
-    <script src="../js/code.js" defer></script>
-
-    <!-- <script defer>
-        document.addEventListener('DOMContentLoaded', () => {
-            readCookie();
-
-            if (userId < 1) {
-                window.location.replace("/login.html");
-                return;
-            }
-
-            document.querySelector('.username-text').textContent = firstName + " " + lastName;
-        });
-    </script> -->
-    
+      <meta charset="UTF-8">
+      <title>Nebulist | Create Account</title>
+      <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+  
+      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Ubuntu&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="css/styles.css">
+  
+      <script src="js/code.js" defer></script>
+  
+      <script defer>
+          document.addEventListener("DOMContentLoaded", () => {
+              readCookie();
+              if (userId > 0) {
+                  window.location.href = "dashboard.html";
+              }
+          });
+      </script>
+  </head>
+  
   <body>
-        <header class="dashboard-header">
-        <h1 class="dashboard-title">NEBULIST</h1>
-        
-        <nav class="dashboard-nav">
-            <a href="./" class="nav-link">Home</a>
-            <a href="contacts.html" class="nav-link">Contacts</a>
-            <a href="about.html" class="nav-link active">About Us</a>
-            <a href="#" onclick="doLogout()" class="nav-link logout">Logout</a>
-        </nav>
-    </header>
-    <main class="about-main">
-
-      <div class="container">
-        <section class="mission-section">
-          <div class="mission-selection about-card">
-              <h2>Our Mission</h2>
-              <p>
-                We are Nebulist, a team of passionate developers dedicated to creating
-                a seamless and secure personal contact management experience. Our mission
-                is to help users organize their contacts effortlessly while ensuring their
-                data remains private and protected.
-              </p>
-            </div>
+    <div class="container">
+    
+        <h1>NEBULIST</h1>
+        <h2>Create Account</h2>
+      
+        <main role="main" class="create-main">
+          <div class="card login-card">
+              <form onsubmit="doRegister(); return false;">
+                  <input id="firstName" type="text" placeholder="First Name" required>
+                  <input id="lastName" type="text" placeholder="Last Name" required>
+                  <input id="username" type="text" placeholder="Username" required>
+                  <input id="email" type="email" placeholder="Email" required>
+                  <input id="password" type="password" placeholder="Password" required>
+                  <input id="confirmPassword" type="password" placeholder="Confirm Password" required>
+      
+                  <button type="submit">Register</button>
+              </form>
+      
+              <p id="registerResult"></p>
+      
+              <div class="login-links">
+                  Already have an account?
+                  <span>|</span> 
+                  <a href="login.html">Login</a>
+              </div>
           </div>
-
-            <div class="mission-selection member-card">
-              <div class="text-content">          
-                <div class="team-members">
-                  <p>CaiCheng Li</p>
-                  <p>Project Lead | Frontend Developer</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="mission-selection member-card">
-              <div class="text-content">
-                <div class="team-members">
-                  <p>Joshua Frank</p>
-                  <p>Front-End Developer</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="mission-selection member-card">
-              <div class="text-content">
-                <div class="team-members">
-                  <p>Shanna Byrd</p>
-                  <p>Front-End Developer</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="mission-selection member-card">
-              <div class="text-content">
-                <div class="team-members">
-                  <p>John Varghese</p>
-                  <p>API Developer</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="mission-selection member-card">
-              <div class="text-content">
-                <div class="team-members">
-                  <p>Akin Korkmaz</p>
-                  <p>API Developer</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="mission-selection member-card">
-              <div class="text-content">
-                <div class="team-members">
-                  <p>Sarah Porter</p>
-                  <p>Backend Developer</p>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
-    </main>
+        </main>
+    </div>
   </body>
 </html>
